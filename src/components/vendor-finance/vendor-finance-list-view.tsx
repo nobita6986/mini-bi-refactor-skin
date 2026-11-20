@@ -811,7 +811,7 @@ export function VendorFinanceListView({
                     Dư ứng
                   </th>
                 ) : null}
-                <th scope="col" className={`${LIST_TH_CLASS} md:max-w-[9.5rem] !whitespace-normal`}>
+                <th scope="col" className={`${LIST_TH_CLASS} md:max-w-[9.5rem] !whitespace-normal text-center`}>
                   Trạng thái công nợ
                 </th>
                 <th scope="col" className={`${LIST_TH_CLASS} text-right whitespace-nowrap`}>
@@ -966,10 +966,10 @@ export function VendorFinanceListView({
                       </td>
                     ) : null}
 
-                    <td data-label="Trạng thái công nợ" className={`${LIST_TD_CLASS} md:max-w-[9.5rem]`}>
+                    <td data-label="Trạng thái công nợ" className={`${LIST_TD_CLASS} md:max-w-[9.5rem] md:text-center`}>
                       <StatusBadge
                         tone={balanceInfo.tone}
-                        className="!whitespace-normal text-left leading-tight"
+                        className="!whitespace-normal justify-center text-center leading-tight"
                       >
                         {balanceInfo.statusLabel}
                       </StatusBadge>
