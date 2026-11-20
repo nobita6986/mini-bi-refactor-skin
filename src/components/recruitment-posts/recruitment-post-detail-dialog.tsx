@@ -27,10 +27,10 @@ function DetailField({
           : "min-w-0 space-y-1 rounded-lg bg-surface-muted/75 px-3 py-2"
       }
     >
-      <dt className="text-[11px] font-bold uppercase tracking-wider text-muted">{label}</dt>
+      <dt className="text-[11px] font-normal uppercase tracking-wider text-muted">{label}</dt>
       <dd
         className={[
-          "text-sm font-semibold text-[var(--navy)] break-words",
+          "text-sm font-medium text-foreground break-words",
           mono ? "font-mono tabular-nums" : "",
           multiline ? "whitespace-pre-line font-normal text-foreground" : "",
         ]
@@ -75,7 +75,7 @@ export function RecruitmentPostDetailDialog({
       description={descriptionText}
       descriptionId="recruitment-post-detail-description"
       closeAriaLabel="Đóng hộp thoại chi tiết tin tuyển dụng"
-      contentClassName="sm:w-[min(56rem,calc(100vw-2rem))] lg:w-[min(64rem,calc(100vw-2rem))] border-t-4 border-t-primary"
+      contentClassName="sm:w-[min(56rem,calc(100vw-2rem))] lg:w-[min(64rem,calc(100vw-2rem))] border-t-2 border-t-primary"
       dataTestId="recruitment-post-detail-dialog"
     >
       <div className="space-y-5">
@@ -125,7 +125,7 @@ export function RecruitmentPostDetailDialog({
             >
               <h3
                 id="recruitment-post-detail-sec-1"
-                className="text-sm font-extrabold tracking-tight text-[var(--navy)] border-b-2 border-primary/20 pb-2"
+                className="text-sm font-semibold tracking-tight text-[var(--navy)] border-b border-primary/20 pb-2"
               >
                 1. Thông tin chung dự án
               </h3>
@@ -210,7 +210,7 @@ export function RecruitmentPostDetailDialog({
             >
               <h3
                 id="recruitment-post-detail-sec-2"
-                className="text-sm font-extrabold tracking-tight text-[var(--navy)] border-b-2 border-primary/20 pb-2"
+                className="text-sm font-semibold tracking-tight text-[var(--navy)] border-b border-primary/20 pb-2"
               >
                 2. Yêu cầu ứng viên
               </h3>
@@ -284,7 +284,7 @@ export function RecruitmentPostDetailDialog({
             >
               <h3
                 id="recruitment-post-detail-sec-3"
-                className="text-sm font-extrabold tracking-tight text-[var(--navy)] border-b-2 border-primary/20 pb-2"
+                className="text-sm font-semibold tracking-tight text-[var(--navy)] border-b border-primary/20 pb-2"
               >
                 3. Lương, thưởng và phúc lợi
               </h3>
@@ -518,7 +518,7 @@ export function RecruitmentPostDetailDialog({
             >
               <h3
                 id="recruitment-post-detail-sec-4"
-                className="text-sm font-extrabold tracking-tight text-[var(--navy)] border-b-2 border-primary/20 pb-2"
+                className="text-sm font-semibold tracking-tight text-[var(--navy)] border-b border-primary/20 pb-2"
               >
                 4. Hồ sơ ứng viên cần chuẩn bị
               </h3>

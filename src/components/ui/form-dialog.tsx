@@ -87,7 +87,7 @@ export function FormDialog({
           />
           <div className="flex items-start justify-between gap-4 border-b border-border pb-3">
             <div>
-              <Dialog.Title className="text-lg sm:text-xl font-extrabold tracking-tight text-[var(--navy)]">
+              <Dialog.Title className="text-lg sm:text-xl font-semibold tracking-tight text-[var(--navy)]">
                 {title}
               </Dialog.Title>
               {description ? (
@@ -101,7 +101,7 @@ export function FormDialog({
                 type="button"
                 aria-label={closeAriaLabel}
                 disabled={closeDisabled}
-                className="inline-flex min-h-11 min-w-11 sm:min-h-9 sm:min-w-9 items-center justify-center rounded-lg border border-border bg-surface-muted px-3 text-sm font-bold text-[var(--navy)] transition-colors duration-[var(--ui-motion-hover,160ms)] ease-[var(--ui-motion-ease,cubic-bezier(0.22,1,0.36,1))] motion-reduce:transition-none hover:border-primary hover:bg-surface hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40 disabled:cursor-not-allowed disabled:opacity-50"
+                className="inline-flex min-h-11 min-w-11 sm:min-h-9 sm:min-w-9 items-center justify-center rounded-lg border border-border bg-surface-muted px-3 text-sm font-medium text-[var(--navy)] transition-colors duration-[var(--ui-motion-hover,160ms)] ease-[var(--ui-motion-ease,cubic-bezier(0.22,1,0.36,1))] motion-reduce:transition-none hover:border-primary hover:bg-surface hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40 disabled:cursor-not-allowed disabled:opacity-50"
               >
                 ×
               </button>

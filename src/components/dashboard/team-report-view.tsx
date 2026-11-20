@@ -138,12 +138,12 @@ export function TeamReportView({
     <>
       <header className="rounded-[10px] border border-border border-l-4 border-l-primary bg-surface px-5 py-4 shadow-[var(--shadow-card)]">
         <div className="min-w-0 flex-1">
-          <p className="inline-flex items-center rounded-md bg-[var(--selected-bg)] px-2.5 py-0.5 text-xs font-extrabold uppercase tracking-wider text-primary">{view.eyebrow}</p>
-          <h1 className="mt-1.5 text-xl font-extrabold tracking-tight text-[var(--navy)] sm:text-2xl">{view.title}</h1>
+          <p className="inline-flex items-center rounded-md bg-[var(--selected-bg)] px-2.5 py-0.5 text-xs font-medium uppercase tracking-wider text-primary">{view.eyebrow}</p>
+          <h1 className="mt-1.5 text-xl font-semibold tracking-tight text-[var(--navy)] sm:text-2xl">{view.title}</h1>
           <p className="mt-1 max-w-2xl text-sm text-muted">{view.description}</p>
           {generatedAt ? (
-            <p className="mt-1.5 text-xs font-medium text-muted">
-              Báo cáo tạo lúc: <time className="font-mono font-semibold text-[var(--navy)]">{formatTimestamp(generatedAt)}</time>
+            <p className="mt-1.5 text-xs text-muted">
+              Báo cáo tạo lúc: <time className="font-mono text-[var(--navy)]">{formatTimestamp(generatedAt)}</time>
             </p>
           ) : null}
         </div>

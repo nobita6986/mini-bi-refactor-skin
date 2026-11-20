@@ -36,7 +36,7 @@ const inputClass =
 function Field({ id, label, children }: { id: string; label: string; children: ReactNode }) {
   return (
     <label htmlFor={id} className="flex min-w-0 flex-col gap-1 text-sm">
-      <span className="text-xs font-extrabold uppercase tracking-wider text-[var(--navy)]">{label}</span>
+      <span className="text-xs font-medium text-muted">{label}</span>
       {children}
     </label>
   );
@@ -110,10 +110,10 @@ export function DashboardFilters({
 
   const chip = (active: boolean) =>
     cn(
-      "inline-flex h-11 shrink-0 items-center rounded-lg border px-3.5 text-xs font-bold transition-colors duration-[180ms] ease-[var(--ui-motion-ease,cubic-bezier(0.22,1,0.36,1))] motion-reduce:transition-none focus:outline-none focus-visible:ring-2 focus-visible:ring-ring/40",
+      "inline-flex h-11 shrink-0 items-center rounded-lg border px-3.5 text-xs font-medium transition-colors duration-[180ms] ease-[var(--ui-motion-ease,cubic-bezier(0.22,1,0.36,1))] motion-reduce:transition-none focus:outline-none focus-visible:ring-2 focus-visible:ring-ring/40",
       active
         ? "border-primary bg-primary text-on-primary shadow-2xs"
-        : "border-border bg-surface-muted text-[var(--navy)] hover:border-primary/40 hover:bg-[var(--selected-bg)] hover:text-primary"
+        : "border-border bg-surface-muted text-foreground hover:border-primary/40 hover:bg-[var(--selected-bg)] hover:text-primary"
     );
 
   return (
@@ -121,16 +121,16 @@ export function DashboardFilters({
       <section aria-label="Bộ lọc báo cáo" className="rounded-[10px] border border-border bg-surface/95 p-4 shadow-[var(--shadow-card)] md:sticky md:top-2 md:z-20 md:backdrop-blur">
         <div className="flex flex-wrap items-center justify-between gap-2">
           <div className="flex items-center gap-2">
-            <h2 className="text-sm font-extrabold uppercase tracking-wider text-[var(--navy)]">Bộ lọc</h2>
-            <span className="inline-flex items-center rounded-md bg-[var(--selected-bg)] px-2.5 py-0.5 text-xs font-bold text-primary">{countLabel}</span>
+            <h2 className="text-sm font-semibold text-[var(--navy)]">Bộ lọc</h2>
+            <span className="inline-flex items-center rounded-md bg-[var(--selected-bg)] px-2.5 py-0.5 text-xs font-medium text-primary">{countLabel}</span>
           </div>
           <div className="flex items-center gap-2">
-            <button type="button" aria-expanded={advancedOpen} aria-controls="advanced-filters" onClick={() => setAdvancedOpen((o) => !o)} className="inline-flex h-11 items-center rounded-lg border border-border bg-surface px-3.5 text-sm font-bold text-[var(--navy)] transition-colors duration-[var(--ui-motion-hover,160ms)] ease-[var(--ui-motion-ease,cubic-bezier(0.22,1,0.36,1))] motion-reduce:transition-none hover:border-primary/40 hover:bg-surface-muted focus:outline-none focus-visible:ring-2 focus-visible:ring-ring/40">
+            <button type="button" aria-expanded={advancedOpen} aria-controls="advanced-filters" onClick={() => setAdvancedOpen((o) => !o)} className="inline-flex h-11 items-center rounded-lg border border-border bg-surface px-3.5 text-sm font-medium text-[var(--navy)] transition-colors duration-[var(--ui-motion-hover,160ms)] ease-[var(--ui-motion-ease,cubic-bezier(0.22,1,0.36,1))] motion-reduce:transition-none hover:border-primary/40 hover:bg-surface-muted focus:outline-none focus-visible:ring-2 focus-visible:ring-ring/40">
               <span aria-hidden className="mr-1">{advancedOpen ? "▾" : "▸"}</span>
               Bộ lọc nâng cao
             </button>
             {activeCount > 0 || allTime ? (
-              <button type="button" onClick={() => applyFilters(null)} className="inline-flex h-11 items-center rounded-lg bg-primary px-3.5 text-sm font-bold text-on-primary transition-colors duration-[var(--ui-motion-hover,160ms)] ease-[var(--ui-motion-ease,cubic-bezier(0.22,1,0.36,1))] motion-reduce:transition-none hover:bg-[var(--primary-hover)] focus:outline-none focus:ring-2 focus:ring-ring/40">
+              <button type="button" onClick={() => applyFilters(null)} className="inline-flex h-11 items-center rounded-lg bg-primary px-3.5 text-sm font-medium text-on-primary transition-colors duration-[var(--ui-motion-hover,160ms)] ease-[var(--ui-motion-ease,cubic-bezier(0.22,1,0.36,1))] motion-reduce:transition-none hover:bg-[var(--primary-hover)] focus:outline-none focus:ring-2 focus:ring-ring/40">
                 Xóa bộ lọc
               </button>
             ) : null}

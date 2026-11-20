@@ -777,9 +777,9 @@
 .drawerTitle {
   margin: 0;
   color: var(--navy, var(--foreground));
-  font-size: 22px;
-  font-weight: 800;
-  letter-spacing: -0.02em;
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -0.015em;
 }
 
 .drawerDescription {
@@ -800,7 +800,7 @@
   gap: 6px;
   color: var(--navy, var(--foreground));
   font-size: 13px;
-  font-weight: 700;
+  font-weight: 500;
 }
 
 .field input,
@@ -876,10 +876,10 @@
 .documentTitle {
   margin: 0;
   color: var(--navy, var(--foreground));
-  font-size: 16px;
-  font-weight: 800;
-  letter-spacing: -0.015em;
-  border-bottom: 2px solid color-mix(in srgb, var(--primary) 18%, var(--border));
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  border-bottom: 1px solid color-mix(in srgb, var(--primary) 18%, var(--border));
   padding-bottom: 8px;
 }
 
@@ -1883,7 +1883,7 @@
   overflow-y: auto;
   overflow-x: hidden;
   border: 1px solid var(--border);
-  border-top: 4px solid var(--primary);
+  border-top: 2px solid var(--primary);
   border-radius: 14px;
   background: var(--surface);
   color: var(--foreground);
@@ -2120,14 +2120,14 @@
 .profileFieldList dt {
   color: var(--muted);
   font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.02em;
+  font-weight: 400;
+  letter-spacing: 0.01em;
 }
 
 .profileFieldList dd {
   margin: 0;
-  color: var(--navy, var(--foreground));
-  font-weight: 600;
+  color: var(--foreground);
+  font-weight: 500;
   overflow-wrap: anywhere;
 }
 
