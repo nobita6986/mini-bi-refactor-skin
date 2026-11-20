@@ -48,12 +48,12 @@ export function PageHeader({
     >
       <div className="min-w-0 flex-1 space-y-1">
         {eyebrow ? (
-          <p className="text-xs font-semibold uppercase tracking-wider text-primary">
+          <p className="text-xs font-bold uppercase tracking-wider text-primary">
             {eyebrow}
           </p>
         ) : null}
         <div className="flex flex-wrap items-center gap-2.5">
-          <h1 className="text-xl font-semibold tracking-tight text-foreground sm:text-2xl">
+          <h1 className="text-xl font-extrabold tracking-tight text-[var(--navy)] sm:text-2xl">
             {title}
           </h1>
           {badge}

@@ -68,11 +68,11 @@ export function DesktopNav({
               href={entry.path}
               aria-current={isActive ? "page" : undefined}
               className={cn(
-                "inline-flex h-9 items-center gap-2 rounded-md px-3 text-sm font-medium transition-colors duration-[var(--ui-motion-hover,160ms)] ease-[var(--ui-motion-ease,cubic-bezier(0.22,1,0.36,1))] motion-reduce:transition-none",
+                "inline-flex h-9 items-center gap-2 rounded-lg px-3 text-sm font-semibold transition-colors duration-[var(--ui-motion-hover,160ms)] ease-[var(--ui-motion-ease,cubic-bezier(0.22,1,0.36,1))] motion-reduce:transition-none",
                 "focus:outline-none focus-visible:ring-2 focus-visible:ring-ring/40",
                 isActive
-                  ? "bg-primary/10 text-foreground"
-                  : "text-muted hover:bg-muted/10 hover:text-foreground"
+                  ? "bg-[var(--selected-bg)] text-primary"
+                  : "text-muted hover:bg-surface-muted hover:text-[var(--navy)]"
               )}
             >
               <Icon className="h-4 w-4" aria-hidden />
@@ -88,11 +88,11 @@ export function DesktopNav({
             <DropdownMenu.Trigger
               aria-label={item.label}
               className={cn(
-                "inline-flex h-9 items-center gap-2 rounded-md px-3 text-sm font-medium transition-colors duration-[var(--ui-motion-hover,160ms)] ease-[var(--ui-motion-ease,cubic-bezier(0.22,1,0.36,1))] motion-reduce:transition-none",
+                "inline-flex h-9 items-center gap-2 rounded-lg px-3 text-sm font-semibold transition-colors duration-[var(--ui-motion-hover,160ms)] ease-[var(--ui-motion-ease,cubic-bezier(0.22,1,0.36,1))] motion-reduce:transition-none",
                 "focus:outline-none focus-visible:ring-2 focus-visible:ring-ring/40",
                 isActive
-                  ? "bg-primary/10 text-foreground"
-                  : "text-muted hover:bg-muted/10 hover:text-foreground"
+                  ? "bg-[var(--selected-bg)] text-primary"
+                  : "text-muted hover:bg-surface-muted hover:text-[var(--navy)]"
               )}
             >
               <Icon className="h-4 w-4" aria-hidden />
@@ -103,7 +103,7 @@ export function DesktopNav({
               <DropdownMenu.Content
                 align="start"
                 sideOffset={6}
-                className="z-50 min-w-56 rounded-md border border-border bg-surface p-1 shadow-lg"
+                className="z-50 min-w-56 rounded-[10px] border border-border bg-surface p-1 shadow-[var(--shadow-card-hover)]"
               >
                 {item.entries.map((entry) => {
                   const EntryIcon = NAV_ICONS[entry.id];
@@ -115,11 +115,11 @@ export function DesktopNav({
                         href={entry.path}
                         aria-current={entryActive ? "page" : undefined}
                         className={cn(
-                          "flex h-10 items-center gap-3 rounded px-3 text-sm outline-none transition-colors duration-[var(--ui-motion-hover,160ms)] ease-[var(--ui-motion-ease,cubic-bezier(0.22,1,0.36,1))] motion-reduce:transition-none",
-                          "data-[highlighted]:bg-primary/10 data-[highlighted]:text-foreground",
+                          "flex h-10 items-center gap-3 rounded-md px-3 text-sm font-medium outline-none transition-colors duration-[var(--ui-motion-hover,160ms)] ease-[var(--ui-motion-ease,cubic-bezier(0.22,1,0.36,1))] motion-reduce:transition-none",
+                          "data-[highlighted]:bg-[var(--selected-bg)] data-[highlighted]:text-primary",
                           entryActive
-                            ? "bg-primary/10 text-foreground"
-                            : "text-muted hover:bg-surface-hover hover:text-foreground"
+                            ? "bg-[var(--selected-bg)] font-semibold text-primary"
+                            : "text-muted hover:bg-surface-hover hover:text-[var(--navy)]"
                         )}
                       >
                         <EntryIcon className="h-4 w-4" aria-hidden />

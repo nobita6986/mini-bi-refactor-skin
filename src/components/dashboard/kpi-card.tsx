@@ -130,18 +130,18 @@ export function KpiCard({
     <div
       className={
         compact
-          ? "relative flex h-full min-h-28 flex-col overflow-hidden rounded-xl border border-border bg-surface p-3 shadow-sm"
-          : "relative overflow-hidden rounded-2xl border border-border bg-surface p-5 shadow-sm"
+          ? "relative flex h-full min-h-28 flex-col overflow-hidden rounded-[10px] border border-border bg-surface p-3 shadow-[var(--shadow-card)] transition-[box-shadow,border-color] duration-[var(--ui-motion-hover,160ms)] hover:border-[var(--line-strong)] hover:shadow-[var(--shadow-card-hover)]"
+          : "relative overflow-hidden rounded-[10px] border border-border bg-surface p-5 shadow-[var(--shadow-card)] transition-[box-shadow,border-color] duration-[var(--ui-motion-hover,160ms)] hover:border-[var(--line-strong)] hover:shadow-[var(--shadow-card-hover)]"
       }
     >
       <div className="absolute inset-x-0 top-0 h-1" style={{ background: accent }} aria-hidden />
-      <p className="flex items-center gap-1.5 text-xs font-medium uppercase tracking-wide text-muted">
+      <p className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-muted">
         <span className="inline-block h-2 w-2 rounded-full" style={{ background: accent }} aria-hidden />
         {label}
       </p>
       <div
         className={
-          "mt-2 font-semibold tracking-tight tabular-nums text-foreground transition-opacity duration-[var(--ui-motion-kpi,220ms)] ease-[var(--ui-motion-ease,cubic-bezier(0.22,1,0.36,1))] motion-reduce:transition-none " +
+          "mt-2 font-extrabold tracking-tight tabular-nums text-[var(--navy)] transition-opacity duration-[var(--ui-motion-kpi,220ms)] ease-[var(--ui-motion-ease,cubic-bezier(0.22,1,0.36,1))] motion-reduce:transition-none " +
           (compact ? "text-2xl" : "text-3xl")
         }
         data-kpi-final-value={authoritativeNumericText}

@@ -15,19 +15,19 @@ export type ButtonSize = "md" | "sm" | "icon-sm";
 
 const VARIANT_CLASSES: Readonly<Record<ButtonVariant, string>> = {
   primary:
-    "border border-transparent bg-primary text-on-primary shadow-2xs hover:opacity-95",
+    "border border-transparent bg-primary text-on-primary shadow-2xs hover:bg-[var(--primary-hover)]",
   secondary:
-    "border border-border bg-surface text-foreground hover:bg-muted/10",
+    "border border-border bg-surface text-[var(--navy)] hover:border-primary/40 hover:bg-surface-muted",
   outline:
-    "border border-border bg-surface text-foreground hover:bg-muted/10",
+    "border border-border bg-surface text-[var(--navy)] hover:border-primary hover:bg-surface-muted",
   soft:
-    "border border-primary/25 bg-primary/10 text-primary hover:bg-primary/15",
+    "border border-primary/35 bg-[var(--selected-bg)] text-primary hover:bg-primary hover:text-on-primary",
   danger:
     "border border-transparent bg-rose-600 text-white hover:bg-rose-700",
   "danger-outline":
     "border border-rose-500/35 bg-rose-500/10 text-rose-700 hover:bg-rose-500/15 dark:text-rose-200",
   ghost:
-    "border border-transparent bg-transparent text-muted hover:bg-muted/10 hover:text-foreground",
+    "border border-transparent bg-transparent text-muted hover:bg-surface-muted hover:text-[var(--navy)]",
 };
 
 const SIZE_CLASSES: Readonly<Record<ButtonSize, string>> = {
@@ -49,7 +49,7 @@ export function buttonClasses({
   className?: string;
 } = {}): string {
   return cn(
-    "inline-flex items-center justify-center font-medium whitespace-nowrap shrink-0 transition-[color,background-color,border-color,box-shadow,opacity,transform] duration-[var(--ui-motion-hover,160ms)] active:duration-[var(--ui-motion-fast,120ms)] ease-[var(--ui-motion-ease,cubic-bezier(0.22,1,0.36,1))] active:scale-[0.99] disabled:active:scale-100 aria-busy:active:scale-100 motion-reduce:transition-none motion-reduce:transform-none",
+    "inline-flex items-center justify-center font-semibold whitespace-nowrap shrink-0 transition-[color,background-color,border-color,box-shadow,opacity,transform] duration-[var(--ui-motion-hover,160ms)] active:duration-[var(--ui-motion-fast,120ms)] ease-[var(--ui-motion-ease,cubic-bezier(0.22,1,0.36,1))] active:scale-[0.99] disabled:active:scale-100 aria-busy:active:scale-100 motion-reduce:transition-none motion-reduce:transform-none",
     "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40 disabled:cursor-not-allowed disabled:opacity-50",
     VARIANT_CLASSES[variant],
     SIZE_CLASSES[size],
