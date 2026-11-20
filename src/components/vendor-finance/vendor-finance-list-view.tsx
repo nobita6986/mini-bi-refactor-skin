@@ -790,10 +790,10 @@ export function VendorFinanceListView({
           <table className={DATA_TABLE_CLASS}>
             <thead className={DATA_TABLE_HEAD_CLASS}>
               <tr>
-                <th scope="col" className={`${LIST_TH_CLASS} md:w-[10.5rem] md:max-w-[10.5rem]`}>
+                <th scope="col" className={`${LIST_TH_CLASS} md:w-[10.5rem] md:max-w-[10.5rem] !whitespace-normal`}>
                   Vendor
                 </th>
-                <th scope="col" className={`${LIST_TH_CLASS} md:max-w-[17rem]`}>
+                <th scope="col" className={`${LIST_TH_CLASS} md:min-w-[20rem] md:max-w-[24rem] !whitespace-normal`}>
                   Sổ theo Dự án × Kế toán phụ trách × Loại HĐ
                 </th>
                 <th
@@ -811,7 +811,7 @@ export function VendorFinanceListView({
                     Dư ứng
                   </th>
                 ) : null}
-                <th scope="col" className={`${LIST_TH_CLASS} md:max-w-[9.5rem]`}>
+                <th scope="col" className={`${LIST_TH_CLASS} md:max-w-[9.5rem] !whitespace-normal`}>
                   Trạng thái công nợ
                 </th>
                 <th scope="col" className={`${LIST_TH_CLASS} text-right whitespace-nowrap`}>
@@ -866,7 +866,7 @@ export function VendorFinanceListView({
 
                     <td
                       data-label="Sổ theo Dự án × Kế toán phụ trách × Loại HĐ"
-                      className={`${LIST_TD_CLASS} max-md:flex-col max-md:items-stretch max-md:!text-left md:max-w-[17rem] whitespace-normal break-words`}
+                      className={`${LIST_TD_CLASS} max-md:flex-col max-md:items-stretch max-md:!text-left md:min-w-[20rem] md:max-w-[24rem] whitespace-normal break-words`}
                     >
                       {vendor.sub_ledgers.length === 0 ? (
                         <span className="text-xs text-muted">Chưa liên kết sổ dự án</span>
