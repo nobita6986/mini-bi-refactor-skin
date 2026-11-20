@@ -1875,7 +1875,7 @@
   left: 50%;
   transform: translate(-50%, -50%);
   display: flex;
-  width: min(1040px, 95vw);
+  width: min(1100px, 95vw);
   max-width: 95vw;
   height: min(760px, calc(100svh - 48px));
   max-height: calc(100svh - 32px);
@@ -1903,24 +1903,45 @@
 
 .workerDetailGrid {
   display: grid;
-  grid-template-columns: 340px minmax(0, 1fr);
-  gap: 18px;
-  align-items: start;
-}
-
-.workerDetailSidebar {
-  display: grid;
+  grid-template-columns: minmax(380px, 0.94fr) minmax(0, 1.06fr);
   gap: 14px;
+  align-items: start;
   border: 1px solid var(--border);
   border-radius: 12px;
   background: var(--surface-muted);
   padding: 14px;
 }
 
+.workerDetailSidebar {
+  display: grid;
+  gap: 14px;
+  min-width: 0;
+}
+
 .workerDetailMain {
   display: grid;
   gap: 14px;
   min-width: 0;
+}
+
+.documentSection .submissionMeta {
+  display: grid;
+  grid-template-columns: 116px minmax(0, 1fr);
+  gap: 8px 16px;
+  align-items: baseline;
+}
+
+.documentSection .submissionMeta dt {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.documentSection .submissionMeta dd {
+  margin: 0;
+  color: var(--foreground);
+  font-size: 13.5px;
+  font-weight: 500;
 }
 
 @media (max-width: 860px) {
@@ -2112,9 +2133,18 @@
 .profileFieldList {
   display: grid;
   margin: 0;
-  gap: 6px 14px;
-  grid-template-columns: minmax(140px, 200px) 1fr;
-  font-size: 13px;
+  gap: 8px 16px;
+  grid-template-columns: minmax(112px, 148px) minmax(0, 1fr);
+  align-items: baseline;
+  font-size: 13.5px;
+}
+
+.workerDetailSidebar .profileFieldList {
+  grid-template-columns: 116px minmax(0, 1fr);
+}
+
+.workerDetailMain .profileFieldList {
+  grid-template-columns: 180px minmax(0, 1fr);
 }
 
 .profileFieldList dt {
@@ -2128,7 +2158,8 @@
   margin: 0;
   color: var(--foreground);
   font-weight: 500;
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
+  word-break: normal;
 }
 
 .profileNote {
