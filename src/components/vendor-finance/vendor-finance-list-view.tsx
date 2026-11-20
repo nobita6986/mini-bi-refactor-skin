@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useId, useState } from "react";
+import { useEffect, useId, useMemo, useState } from "react";
 import Link from "next/link";
 import {
   ArrowRight,
@@ -17,6 +17,7 @@ import { Alert } from "@/components/ui/alert";
 import { StatusBadge } from "@/components/ui/badge";
 import { Button, buttonClasses } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { CatalogFilterCombobox, type CatalogFilterOption } from "@/components/ui/catalog-filter-combobox";
 import {
   DATA_TABLE_CLASS,
   DATA_TABLE_HEAD_CLASS,
@@ -255,6 +256,15 @@ export function VendorFinanceListView({
   const activeAssignedProjectCount = data?.allowed_actions.active_assigned_project_count ?? 0;
 
   const summary = data?.summary ?? null;
+  const projectFilterOptions = useMemo<CatalogFilterOption[]>(
+    () =>
+      (contextData?.projects ?? []).map((proj) => ({
+        id: proj.project_id,
+        label: proj.display_name,
+        keywords: proj.project_id,
+      })),
+    [contextData?.projects],
+  );
   const pageCount = data ? Math.max(1, Math.ceil(data.total / data.page_size)) : 1;
   const hasActiveFilters =
     searchInput.trim().length > 0 ||
@@ -565,7 +575,7 @@ export function VendorFinanceListView({
               htmlFor={searchInputId}
               className="block text-xs sm:text-sm font-semibold text-foreground"
             >
-              Tìm Vendor gần đúng (tên hoặc mã Vendor)
+              Tìm Vendor gần đúng
             </label>
             <div className="relative">
               <Search
@@ -584,30 +594,21 @@ export function VendorFinanceListView({
             </div>
           </div>
 
-          <div className="space-y-1.5">
-            <label
-              htmlFor={projectSelectId}
-              className="block text-xs sm:text-sm font-semibold text-foreground"
-            >
-              Dự án
-            </label>
-            <select
-              id={projectSelectId}
-              value={projectFilter}
-              onChange={(e) => {
-                setProjectFilter(e.target.value);
-                setPage(1);
-              }}
-              className="min-h-11 sm:min-h-10 w-full rounded-lg border border-border bg-surface px-3 py-2 text-sm text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40"
-            >
-              <option value="">Tất cả dự án được phép xem</option>
-              {(contextData?.projects ?? []).map((proj) => (
-                <option key={proj.project_id} value={proj.project_id}>
-                  {proj.display_name} ({proj.project_id})
-                </option>
-              ))}
-            </select>
-          </div>
+          <CatalogFilterCombobox
+            id={projectSelectId}
+            label="Dự án"
+            allLabel="Tất cả dự án"
+            placeholder="Gõ tên hoặc mã dự án"
+            options={projectFilterOptions}
+            value={projectFilter}
+            containerClassName="relative space-y-1.5"
+            labelClassName="block text-xs sm:text-sm font-semibold text-foreground"
+            inputClassName="min-h-11 sm:min-h-10 w-full rounded-lg border border-border bg-surface px-3 py-2 text-sm text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40"
+            onChange={(nextValue) => {
+              setProjectFilter(nextValue);
+              setPage(1);
+            }}
+          />
 
           <div className="space-y-1.5">
             <label
