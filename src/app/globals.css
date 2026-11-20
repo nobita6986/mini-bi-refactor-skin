@@ -477,8 +477,9 @@ h4 {
   border-radius: 8px 8px 0 0;
 }
 
-/* Editorial Operational Tables (excluding Direct Entry .rdg grid) */
-table:not(.rdg *) > thead > tr > th {
+/* Editorial Operational Tables (strictly scoped to .r22-card-table & .r22-report-table) */
+table.r22-card-table > thead > tr > th,
+table.r22-report-table > thead > tr > th {
   background-color: var(--surface-muted);
   color: var(--navy);
   font-weight: 600;
@@ -487,7 +488,8 @@ table:not(.rdg *) > thead > tr > th {
   border-bottom: 1px solid var(--line-strong);
 }
 
-table:not(.rdg *) > tbody > tr:hover {
+table.r22-card-table > tbody > tr:hover,
+table.r22-report-table > tbody > tr:hover {
   background-color: var(--selected-bg);
 }
 
