@@ -14,10 +14,22 @@ import { usePathname } from "next/navigation";
 
 import { findEntryByPath } from "@/lib/navigation/registry";
 
+let lastCommittedPathname: string | null = null;
+let pendingRouteNavigation = false;
+
 export function ActivePageLabel() {
   const pathname = usePathname();
   const active = findEntryByPath(pathname);
-  const [progressState, setProgressState] = useState<"idle" | "loading" | "completing">("idle");
+  const [progressState, setProgressState] = useState<"idle" | "loading" | "completing">(() => {
+    if (
+      pendingRouteNavigation ||
+      (typeof document !== "undefined" &&
+        document.documentElement.getAttribute("data-route-state") === "loading")
+    ) {
+      return "loading";
+    }
+    return "idle";
+  });
   const prevPathRef = useRef<string>(pathname);
 
   useEffect(() => {
@@ -53,6 +65,7 @@ export function ActivePageLabel() {
       if (url.origin !== window.location.origin) return;
       if (url.pathname === window.location.pathname && url.search === window.location.search) return;
 
+      pendingRouteNavigation = true;
       document.documentElement.setAttribute("data-route-state", "loading");
       setProgressState("loading");
     };
@@ -64,9 +77,17 @@ export function ActivePageLabel() {
   }, []);
 
   useEffect(() => {
-    const pathChanged = prevPathRef.current !== pathname;
-    prevPathRef.current = pathname;
+    const hadPendingNavigation =
+      pendingRouteNavigation ||
+      document.documentElement.getAttribute("data-route-state") === "loading";
+    const pathChanged =
+      (lastCommittedPathname !== null && lastCommittedPathname !== pathname) ||
+      prevPathRef.current !== pathname ||
+      hadPendingNavigation;
 
+    lastCommittedPathname = pathname;
+    prevPathRef.current = pathname;
+    pendingRouteNavigation = false;
     document.documentElement.removeAttribute("data-route-state");
 
     const mainEl = document.querySelector("main");
@@ -105,14 +126,18 @@ export function ActivePageLabel() {
 
     if (!pathChanged) return;
 
+    const startTimer = window.setTimeout(() => {
+      setProgressState("loading");
+    }, 0);
     const completeTimer = window.setTimeout(() => {
       setProgressState("completing");
-    }, 0);
+    }, 55);
     const idleTimer = window.setTimeout(() => {
       setProgressState("idle");
-    }, 220);
+    }, 310);
 
     return () => {
+      window.clearTimeout(startTimer);
       window.clearTimeout(completeTimer);
       window.clearTimeout(idleTimer);
     };
