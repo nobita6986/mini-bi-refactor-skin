@@ -28,7 +28,7 @@ export function RecruitmentPostCard({
   const allowRepost = Boolean(canRepost) && isWithdrawn;
 
   return (
-    <Card className="flex h-full flex-col gap-4 rounded-[10px] border-border bg-surface p-4 sm:p-5 shadow-[var(--shadow-card)] transition-[border-color,box-shadow,transform] duration-[var(--ui-motion-hover,160ms)] ease-[var(--ui-motion-ease,cubic-bezier(0.22,1,0.36,1))] hover:-translate-y-0.5 hover:border-[var(--line-strong)] hover:shadow-[var(--shadow-card-hover)] motion-reduce:transition-none">
+    <Card className="flex h-full flex-col gap-4 rounded-[10px] border-border bg-surface p-4 sm:p-5 shadow-[var(--shadow-card)] transition-[border-color,box-shadow] duration-[var(--ui-motion-hover,160ms)] ease-[var(--ui-motion-ease,cubic-bezier(0.22,1,0.36,1))] hover:border-[var(--line-strong)] hover:shadow-[var(--shadow-card-hover)] motion-reduce:transition-none">
       <div
         data-testid={`recruitment-post-card-${card.briefId}`}
         className="flex h-full flex-col justify-between gap-4"

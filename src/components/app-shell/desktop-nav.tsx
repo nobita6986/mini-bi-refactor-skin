@@ -84,7 +84,7 @@ export function DesktopNav({
         const Icon = GROUP_ICONS[item.id];
         const isActive = item.entries.some((entry) => active?.id === entry.id);
         return (
-          <DropdownMenu.Root key={item.id}>
+          <DropdownMenu.Root key={item.id} modal={false}>
             <DropdownMenu.Trigger
               aria-label={item.label}
               className={cn(

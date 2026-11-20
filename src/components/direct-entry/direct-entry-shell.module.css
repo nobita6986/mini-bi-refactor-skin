@@ -334,6 +334,12 @@
 }
 
 /* P1.7-H06: bar tren mobile phai full-width, khong tran. */
+@media (min-width: 768px) {
+  .documentsDialog[data-ui-drawer-motion="right"] {
+    animation-name: ui-dialog-enter;
+  }
+}
+
 @media (max-width: 767px) {
   .contextualActionBar {
     grid-template-columns: minmax(0, 1fr);
@@ -1079,6 +1085,12 @@
   gap: 10px;
   margin-top: auto;
   padding-top: 24px;
+}
+
+@media (min-width: 768px) {
+  .documentsDialog[data-ui-drawer-motion="right"] {
+    animation-name: ui-dialog-enter;
+  }
 }
 
 @media (max-width: 767px) {
@@ -1917,6 +1929,12 @@
   }
 }
 
+@media (min-width: 768px) {
+  .documentsDialog[data-ui-drawer-motion="right"] {
+    animation-name: ui-dialog-enter;
+  }
+}
+
 @media (max-width: 767px) {
   .documentsDialog {
     top: auto;
@@ -2136,6 +2154,12 @@
   min-height: 44px;
 }
 
+@media (min-width: 768px) {
+  .documentsDialog[data-ui-drawer-motion="right"] {
+    animation-name: ui-dialog-enter;
+  }
+}
+
 @media (max-width: 767px) {
   .profilePasteDialog {
     width: 100vw;
@@ -2149,6 +2173,12 @@
 
   .profileFieldList dt {
     font-weight: 600;
+  }
+}
+
+@media (min-width: 768px) {
+  .documentsDialog[data-ui-drawer-motion="right"] {
+    animation-name: ui-dialog-enter;
   }
 }
 

@@ -75,39 +75,16 @@ export function ActivePageLabel() {
       typeof window.matchMedia === "function" &&
       window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    if (mainEl instanceof HTMLElement && !reducedMotion) {
-      mainEl.setAttribute("data-page-enter", "true");
+    if (pathChanged && mainEl instanceof HTMLElement && !reducedMotion) {
       try {
+        // Pure opacity cross-fade ONLY — zero translateY/scale so page height and scrollbar never jump
         mainEl.animate(
-          [
-            { opacity: 0, transform: "translate3d(0, 12px, 0) scale(0.996)" },
-            { opacity: 1, transform: "translate3d(0, 0, 0) scale(1)" },
-          ],
+          [{ opacity: 0.15 }, { opacity: 1 }],
           {
-            duration: 280,
+            duration: 170,
             easing: "cubic-bezier(0.22, 1, 0.36, 1)",
-            fill: "both",
           },
         );
-
-        const sections = mainEl.querySelectorAll<HTMLElement>(
-          ":scope > header, :scope > section, :scope > div > header, :scope > div > section, :scope > div > div > header, :scope > div > div > section",
-        );
-        sections.forEach((sec, index) => {
-          if (index > 6 || sec.closest(".rdg")) return;
-          sec.animate(
-            [
-              { opacity: 0, transform: "translate3d(0, 10px, 0)" },
-              { opacity: 1, transform: "translate3d(0, 0, 0)" },
-            ],
-            {
-              duration: 260,
-              delay: Math.min(index * 38, 160),
-              easing: "cubic-bezier(0.22, 1, 0.36, 1)",
-              fill: "both",
-            },
-          );
-        });
       } catch {
         // Ignore WAAPI errors in older or headless environments
       }
@@ -133,7 +110,7 @@ export function ActivePageLabel() {
     }, 0);
     const idleTimer = window.setTimeout(() => {
       setProgressState("idle");
-    }, 260);
+    }, 220);
 
     return () => {
       window.clearTimeout(completeTimer);

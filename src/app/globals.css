@@ -101,10 +101,22 @@
   --font-mono: var(--font-geist-mono), ui-monospace, monospace;
 }
 
+html {
+  scrollbar-gutter: stable;
+  overflow-x: clip;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-geist-sans), ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  overflow-x: clip;
+}
+
+/* Giữ cố định lề scrollbar khi Radix Dialog/Dropdown bật data-scroll-locked để giao diện không bao giờ bị giật ngang */
+body[data-scroll-locked] {
+  margin-right: 0 !important;
+  padding-right: 0 !important;
 }
 
 /* ============================================================================
@@ -330,7 +342,8 @@ details[data-ui-disclosure="true"][open] > [data-ui-disclosure-body="true"] {
 }
 
 /* ============================================================================
-   Editorial Royal Navy (An Cư) — Cross-Document & Same-Document Page Transitions
+   Editorial Royal Navy (An Cư) — Zero-Shift Cross-Fade Page Transitions
+   (Chỉ chuyển mượt bằng opacity + thanh tiến trình cố định, tuyệt đối không dịch chuyển toạ độ Y hay làm nháy scrollbar)
    ============================================================================ */
 @media (prefers-reduced-motion: no-preference) {
   @view-transition {
@@ -338,50 +351,46 @@ details[data-ui-disclosure="true"][open] > [data-ui-disclosure-body="true"] {
   }
 
   ::view-transition-group(root) {
-    animation-duration: 260ms;
+    animation-duration: 180ms;
     animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
   }
 
   ::view-transition-old(root) {
-    animation: 180ms cubic-bezier(0.4, 0, 1, 1) both ui-vt-fade-out;
+    animation: 140ms ease-out both ui-vt-fade-out;
   }
 
   ::view-transition-new(root) {
-    animation: 260ms cubic-bezier(0.22, 1, 0.36, 1) both ui-vt-slide-in;
+    animation: 180ms ease-out both ui-vt-fade-in;
   }
 }
 
 @keyframes ui-vt-fade-out {
   from {
     opacity: 1;
-    transform: translate3d(0, 0, 0) scale(1);
   }
   to {
     opacity: 0;
-    transform: translate3d(0, -6px, 0) scale(0.996);
   }
 }
 
-@keyframes ui-vt-slide-in {
+@keyframes ui-vt-fade-in {
   from {
     opacity: 0;
-    transform: translate3d(0, 12px, 0) scale(0.996);
   }
   to {
     opacity: 1;
-    transform: translate3d(0, 0, 0) scale(1);
   }
 }
 
 @keyframes ui-route-progress-crawl {
   0% {
-    transform: scaleX(0.06);
+    transform: scaleX(0.08);
   }
-  35% {
-    transform: scaleX(0.45);
+  40% {
+    transform: scaleX(0.5);
   }
-  70% {
-    transform: scaleX(0.74);
+  75% {
+    transform: scaleX(0.76);
   }
   100% {
     transform: scaleX(0.88);
@@ -400,29 +409,24 @@ details[data-ui-disclosure="true"][open] > [data-ui-disclosure-body="true"] {
   transform: scaleX(0);
   opacity: 0;
   background: linear-gradient(90deg, var(--primary) 0%, var(--accent) 55%, var(--primary) 100%);
-  box-shadow: 0 1px 10px color-mix(in srgb, var(--primary) 65%, transparent);
-  transition: transform 200ms cubic-bezier(0.22, 1, 0.36, 1), opacity 200ms ease;
+  box-shadow: 0 1px 8px color-mix(in srgb, var(--primary) 50%, transparent);
+  transition: transform 180ms cubic-bezier(0.22, 1, 0.36, 1), opacity 180ms ease;
 }
 
 .bi-route-progress[data-route-progress="loading"] {
   opacity: 1;
-  animation: ui-route-progress-crawl 1.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: ui-route-progress-crawl 1.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .bi-route-progress[data-route-progress="completing"] {
   opacity: 0;
   transform: scaleX(1);
-  transition: transform 160ms cubic-bezier(0.22, 1, 0.36, 1), opacity 220ms ease 60ms;
+  transition: transform 140ms cubic-bezier(0.22, 1, 0.36, 1), opacity 180ms ease 40ms;
 }
 
 html[data-route-state="loading"] main {
-  opacity: 0.56;
-  transform: translate3d(0, 4px, 0) scale(0.997);
-  filter: saturate(0.92);
-  transition:
-    opacity 150ms cubic-bezier(0.22, 1, 0.36, 1),
-    transform 150ms cubic-bezier(0.22, 1, 0.36, 1),
-    filter 150ms ease;
+  opacity: 0.72;
+  transition: opacity 120ms ease;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -438,8 +442,6 @@ html[data-route-state="loading"] main {
 
   html[data-route-state="loading"] main {
     opacity: 1;
-    transform: none;
-    filter: none;
   }
 }
 
