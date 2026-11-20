@@ -75,7 +75,7 @@ export function RecruitmentPostDetailDialog({
       description={descriptionText}
       descriptionId="recruitment-post-detail-description"
       closeAriaLabel="Đóng hộp thoại chi tiết tin tuyển dụng"
-      contentClassName="sm:w-[min(56rem,calc(100vw-2rem))]"
+      contentClassName="sm:w-[min(56rem,calc(100vw-2rem))] lg:w-[min(64rem,calc(100vw-2rem))] border-t-4 border-t-primary"
       dataTestId="recruitment-post-detail-dialog"
     >
       <div className="space-y-5">
@@ -115,12 +115,13 @@ export function RecruitmentPostDetailDialog({
         {detail ? (
           <div
             data-testid="recruitment-post-detail-content"
-            className="space-y-5"
+            className="grid grid-cols-1 gap-5 lg:grid-cols-12 items-start"
           >
+            <div className="space-y-5 lg:col-span-5">
             {/* Phần 1 — Thông tin chung dự án */}
             <section
               aria-labelledby="recruitment-post-detail-sec-1"
-              className="rounded-[10px] border border-border bg-surface p-4 shadow-[var(--shadow-card)] space-y-3"
+              className="rounded-[10px] border border-border border-t-[3px] border-t-primary bg-surface p-4 shadow-[var(--shadow-card)] space-y-3"
             >
               <h3
                 id="recruitment-post-detail-sec-1"
@@ -273,11 +274,13 @@ export function RecruitmentPostDetailDialog({
                 />
               </dl>
             </section>
+            </div>
 
+            <div className="space-y-5 lg:col-span-7">
             {/* Phần 3 — Lương, thưởng và phúc lợi */}
             <section
               aria-labelledby="recruitment-post-detail-sec-3"
-              className="rounded-[10px] border border-border bg-surface p-4 shadow-[var(--shadow-card)] space-y-3"
+              className="rounded-[10px] border border-border border-t-[3px] border-t-primary bg-surface p-4 shadow-[var(--shadow-card)] space-y-3"
             >
               <h3
                 id="recruitment-post-detail-sec-3"
@@ -578,8 +581,9 @@ export function RecruitmentPostDetailDialog({
                 />
               </dl>
             </section>
+            </div>
 
-            <div className="flex flex-wrap items-center justify-between gap-2 border-t border-border pt-3 text-xs text-muted">
+            <div className="lg:col-span-12 flex flex-wrap items-center justify-between gap-2 border-t border-border pt-3 text-xs text-muted">
               <span>
                 Đăng bởi: {detail.createdByDisplayName} ({detail.publishedAtDisplay})
               </span>

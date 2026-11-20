@@ -68,11 +68,11 @@ export function DesktopNav({
               href={entry.path}
               aria-current={isActive ? "page" : undefined}
               className={cn(
-                "inline-flex h-9 items-center gap-2 rounded-lg px-3 text-sm font-semibold transition-colors duration-[var(--ui-motion-hover,160ms)] ease-[var(--ui-motion-ease,cubic-bezier(0.22,1,0.36,1))] motion-reduce:transition-none",
+                "inline-flex h-9 items-center gap-2 rounded-lg px-3 text-sm font-bold transition-colors duration-[var(--ui-motion-hover,160ms)] ease-[var(--ui-motion-ease,cubic-bezier(0.22,1,0.36,1))] motion-reduce:transition-none",
                 "focus:outline-none focus-visible:ring-2 focus-visible:ring-ring/40",
                 isActive
-                  ? "bg-[var(--selected-bg)] text-primary"
-                  : "text-muted hover:bg-surface-muted hover:text-[var(--navy)]"
+                  ? "bg-[var(--selected-bg)] text-primary shadow-[inset_0_-2px_0_var(--primary)]"
+                  : "text-[var(--navy)]/80 hover:bg-surface-muted hover:text-primary"
               )}
             >
               <Icon className="h-4 w-4" aria-hidden />
@@ -88,11 +88,11 @@ export function DesktopNav({
             <DropdownMenu.Trigger
               aria-label={item.label}
               className={cn(
-                "inline-flex h-9 items-center gap-2 rounded-lg px-3 text-sm font-semibold transition-colors duration-[var(--ui-motion-hover,160ms)] ease-[var(--ui-motion-ease,cubic-bezier(0.22,1,0.36,1))] motion-reduce:transition-none",
+                "inline-flex h-9 items-center gap-2 rounded-lg px-3 text-sm font-bold transition-colors duration-[var(--ui-motion-hover,160ms)] ease-[var(--ui-motion-ease,cubic-bezier(0.22,1,0.36,1))] motion-reduce:transition-none",
                 "focus:outline-none focus-visible:ring-2 focus-visible:ring-ring/40",
                 isActive
-                  ? "bg-[var(--selected-bg)] text-primary"
-                  : "text-muted hover:bg-surface-muted hover:text-[var(--navy)]"
+                  ? "bg-[var(--selected-bg)] text-primary shadow-[inset_0_-2px_0_var(--primary)]"
+                  : "text-[var(--navy)]/80 hover:bg-surface-muted hover:text-primary"
               )}
             >
               <Icon className="h-4 w-4" aria-hidden />

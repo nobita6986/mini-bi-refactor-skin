@@ -120,7 +120,7 @@ export async function AppShell({
   });
   return (
     <div className="flex min-h-full flex-1 flex-col">
-      <header className="sticky top-0 z-20 border-b border-border bg-surface/95 shadow-[var(--shadow-header)] backdrop-blur print:hidden">
+      <header className="sticky top-0 z-20 border-t-[3px] border-t-primary border-b border-border bg-surface/98 shadow-[var(--shadow-header)] backdrop-blur print:hidden">
         <div className="mx-auto flex min-h-14 w-full max-w-6xl flex-wrap items-center gap-3 px-4 py-2 sm:px-6">
           {/* Mobile: hamburger trigger */}
           <MobileNav

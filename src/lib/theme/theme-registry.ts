@@ -106,10 +106,10 @@ export function darken(hex: string, amount: number): string {
 // ---------------------------------------------------------------------------
 
 const LIGHT_NEUTRALS: Omit<ThemeTokens, "bg" | "primary" | "secondary" | "accent" | "chart"> = {
-  fg: "#0f172a",
+  fg: "#091e5a",
   surface: "#ffffff",
-  muted: "#515b7a",
-  border: "#dfe3f0",
+  muted: "#4a5578",
+  border: "#d4dcf0",
   ring: "#0738cd", // placeholder — ghi đè bằng primary bên dưới
   tooltip: "#ffffff",
   onPrimary: "#ffffff",
@@ -151,7 +151,7 @@ function defineTheme(
 }
 
 export const THEMES: ThemeDef[] = [
-  defineTheme("hr-partner", "HR Partner", "#F5F7FC", "#0738CD", "#042280", "#FF0065", [
+  defineTheme("hr-partner", "HR Partner", "#EEF2FB", "#0738CD", "#042280", "#FF0065", [
     "#3745A5", "#0738CD", "#EA580C", "#E11D48", "#059669", "#7C3AED", "#CA8A04", "#475569",
   ]),
   defineTheme("ocean-trust", "Ocean Trust", "#F0F9FF", "#075985", "#0E7490", "#0F766E", [

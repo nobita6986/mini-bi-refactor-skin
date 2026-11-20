@@ -4,11 +4,11 @@
    Script trong <head> ghi đè các biến này trước paint (không flash, không hydration mismatch). */
 :root {
   color-scheme: light;
-  --background: #f5f7fc;
-  --foreground: #0f172a;
+  --background: #eef2fb;
+  --foreground: #091e5a;
   --surface: #ffffff;
-  --muted: #515b7a;
-  --border: #dfe3f0;
+  --muted: #4a5578;
+  --border: #d4dcf0;
   --primary: #0738cd;
   --secondary: #042280;
   --accent: #ff0065;
@@ -32,23 +32,23 @@
   /* R2.2 Modern Soft Enterprise & Editorial Royal Navy — Theme-derived surface & elevation tokens.
      Tự động thích ứng với cả 5 theme (hr-partner, ocean-trust, emerald-growth,
      violet-future, executive-gold) mà không ghi đè inline vars của ThemeProvider. */
-  --surface-muted: color-mix(in srgb, var(--surface) 62%, var(--background) 38%);
+  --surface-muted: color-mix(in srgb, var(--surface) 52%, var(--background) 48%);
   --surface-elevated: color-mix(in srgb, var(--surface) 94%, #ffffff 6%);
-  --surface-hover: color-mix(in srgb, var(--primary) 5%, var(--surface) 95%);
-  --primary-soft: color-mix(in srgb, var(--primary) 10%, transparent);
-  --primary-soft-border: color-mix(in srgb, var(--primary) 24%, transparent);
+  --surface-hover: color-mix(in srgb, var(--primary) 7%, var(--surface) 93%);
+  --primary-soft: color-mix(in srgb, var(--primary) 11%, transparent);
+  --primary-soft-border: color-mix(in srgb, var(--primary) 26%, transparent);
 
   /* Editorial Royal Navy derived tokens */
-  --navy: color-mix(in srgb, var(--primary) 68%, var(--foreground) 32%);
+  --navy: color-mix(in srgb, var(--secondary) 55%, var(--foreground) 45%);
   --heading-ink: var(--navy);
-  --primary-hover: color-mix(in srgb, var(--primary) 75%, #020617 25%);
-  --selected-bg: color-mix(in srgb, var(--primary) 8%, var(--surface) 92%);
-  --line-strong: color-mix(in srgb, var(--border) 72%, var(--primary) 28%);
-  --shadow-header: 0 3px 16px color-mix(in srgb, var(--primary) 5%, transparent);
-  --shadow-card: 0 6px 15px color-mix(in srgb, var(--primary) 6%, transparent), 0 2px 3px color-mix(in srgb, var(--primary) 3%, transparent);
-  --shadow-card-hover: 0 14px 28px color-mix(in srgb, var(--primary) 11%, transparent), 0 4px 8px color-mix(in srgb, var(--primary) 5%, transparent);
-  --shadow-dialog: 0 25px 100px color-mix(in srgb, var(--primary) 22%, transparent);
-  --backdrop: color-mix(in srgb, var(--navy) 55%, rgba(2, 6, 23, 0.45));
+  --primary-hover: color-mix(in srgb, var(--primary) 72%, #020617 28%);
+  --selected-bg: color-mix(in srgb, var(--primary) 10%, var(--surface) 90%);
+  --line-strong: color-mix(in srgb, var(--border) 62%, var(--primary) 38%);
+  --shadow-header: 0 4px 18px color-mix(in srgb, var(--primary) 8%, transparent);
+  --shadow-card: 0 8px 20px color-mix(in srgb, var(--primary) 8%, transparent), 0 2px 4px color-mix(in srgb, var(--primary) 4%, transparent);
+  --shadow-card-hover: 0 16px 32px color-mix(in srgb, var(--primary) 14%, transparent), 0 4px 10px color-mix(in srgb, var(--primary) 6%, transparent);
+  --shadow-dialog: 0 28px 100px color-mix(in srgb, var(--primary) 26%, rgba(4, 18, 66, 0.32));
+  --backdrop: color-mix(in srgb, var(--navy) 62%, rgba(2, 6, 23, 0.48));
 
   /* UIUX Chặng 1 & 2 — Motion tokens */
   --ui-motion-fast: 120ms;
@@ -330,9 +330,53 @@ details[data-ui-disclosure="true"][open] > [data-ui-disclosure-body="true"] {
 }
 
 /* ============================================================================
-   Editorial Royal Navy — Native Dialog Scroll Containment & Input Focus Inversion
+   Editorial Royal Navy (An Cư) — Global Structural Typography, Tabs, Tables & Inputs
    Tuyệt đối KHÔNG tác động tới /direct-entry Spreadsheet Grid (.rdg / .grid).
    ============================================================================ */
+h1,
+h2,
+h3,
+h4 {
+  color: var(--navy);
+  font-weight: 800;
+  letter-spacing: -0.022em;
+}
+
+/* Signature 3px underline Editorial Tab Bar across all modules */
+[role="tablist"] {
+  border-bottom: 3px solid var(--border);
+}
+
+[role="tab"] {
+  font-weight: 700;
+  transition: color 140ms ease, background-color 140ms ease, border-color 140ms ease;
+}
+
+[role="tab"][aria-selected="true"] {
+  color: var(--primary);
+  font-weight: 800;
+  background-color: var(--selected-bg);
+  border-bottom: 3px solid var(--primary);
+  margin-bottom: -3px;
+  border-radius: 8px 8px 0 0;
+}
+
+/* Editorial Operational Tables (excluding Direct Entry .rdg grid) */
+table:not(.rdg *) > thead > tr > th {
+  background-color: var(--surface-muted);
+  color: var(--navy);
+  font-weight: 800;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  border-bottom: 2px solid var(--line-strong);
+}
+
+table:not(.rdg *) > tbody > tr:hover {
+  background-color: var(--selected-bg);
+}
+
+/* Native Dialog Scroll Containment & Input Focus Inversion */
 html:has(dialog:modal) {
   overflow: hidden;
   scrollbar-gutter: stable;
@@ -352,8 +396,26 @@ dialog::backdrop {
     input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="file"]):not([type="color"]),
     select,
     textarea
+  ):not(.rdg *) {
+  background-color: var(--surface-muted);
+  border-color: var(--border);
+  transition: background-color 140ms ease, border-color 140ms ease, box-shadow 140ms ease;
+}
+
+:where(
+    input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="file"]):not([type="color"]),
+    select,
+    textarea
+  ):not(.rdg *):hover:not(:disabled) {
+  border-color: var(--line-strong);
+}
+
+:where(
+    input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="file"]):not([type="color"]),
+    select,
+    textarea
   ):not(.rdg *):focus-visible {
   background-color: var(--surface);
   border-color: var(--primary);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 16%, transparent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 18%, transparent);
 }

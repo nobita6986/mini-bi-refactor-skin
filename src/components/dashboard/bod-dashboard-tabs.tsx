@@ -147,7 +147,7 @@ export function BodDashboardTabs({
 
   return (
     <div className="mx-auto flex w-full max-w-7xl flex-1 flex-col px-4 py-4 sm:px-6" aria-busy={isPending}>
-      <div role="tablist" aria-label="Báo cáo" className="flex flex-wrap gap-2 border-b border-border">
+      <div role="tablist" aria-label="Báo cáo" className="flex flex-wrap gap-1.5 border-b-[3px] border-border bg-surface px-2 pt-2 rounded-t-[10px] shadow-[var(--shadow-card)]">
         {visibleTabs.map((tab, index) => (
           <button
             key={tab.key}
@@ -160,9 +160,9 @@ export function BodDashboardTabs({
             tabIndex={activeTab === tab.key ? 0 : -1}
             onClick={() => selectTab(tab.key)}
             onKeyDown={(event) => onTabKeyDown(event, index)}
-            className={`min-h-11 border-b-2 px-3 text-sm font-medium transition-colors duration-[var(--ui-motion-tab,200ms)] ease-[var(--ui-motion-ease,cubic-bezier(0.22,1,0.36,1))] motion-reduce:transition-none focus:outline-none focus-visible:ring-2 focus-visible:ring-ring/40 ${activeTab === tab.key
-              ? "border-primary text-primary"
-              : "border-transparent text-muted hover:text-foreground"}`}
+            className={`min-h-11 -mb-[3px] rounded-t-lg border-b-[3px] px-4 text-sm transition-colors duration-[var(--ui-motion-tab,200ms)] ease-[var(--ui-motion-ease,cubic-bezier(0.22,1,0.36,1))] motion-reduce:transition-none focus:outline-none focus-visible:ring-2 focus-visible:ring-ring/40 ${activeTab === tab.key
+              ? "border-primary bg-[var(--selected-bg)] font-extrabold text-primary"
+              : "border-transparent font-bold text-muted hover:bg-surface-muted hover:text-[var(--navy)]"}`}
           >
             {tab.label}
           </button>
