@@ -143,7 +143,8 @@ test("WP2 Monthly Attendance & Leave Closing Report surface supports server filt
   assert.ok(workspaceSource.includes("/api/leave/reports/monthly"));
   assert.ok(workspaceSource.includes("buildMonthlyLeaveReportExportUrl"));
   assert.ok(workspaceSource.includes("Chấm công trong tháng"));
-  assert.ok(workspaceSource.includes("Chi tiết ngày nghỉ, loại nghỉ & buổi nghỉ"));
+  assert.ok(workspaceSource.includes('data-label="Chi tiết"'));
+  assert.ok(workspaceSource.includes("formatIsoDayOfMonthVi(ld.leave_date)"));
   assert.ok(workspaceSource.includes("LEAVE_TYPES"));
   assert.ok(workspaceSource.includes("autoAllocateDraftDaysByBalance"));
   assert.equal(workspaceSource.includes("leavePayTreatmentBadge"), false);

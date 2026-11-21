@@ -2,16 +2,155 @@
 
 /**
  * ActivePageLabel — Client Component.
- * Dung usePathname() (co che pathname nho nhat cua App Router) + findEntryByPath
- * de in nhan sr-only "Đang ở trang: X" cho screen-reader.
+ * - Dung usePathname() + findEntryByPath de in nhan sr-only "Đang ở trang: X" cho screen-reader.
+ * - Dieu phoi hieu ung chuyen trang hien dai (Modern Page Transition Orchestrator):
+ *   1. Thanh tien trinh (Top Progress Bar) + hieu ung lui nhe trang cu ngay khi bam link dieu huong.
+ *   2. Hieu ung luot vao (Editorial Glide + Staggered Section Reveal) tren <main> khi route moi mount.
+ *   3. Dieu huong focus a11y ve tieu de h1 neu focus cu bi mat sau khi chuyen trang.
  */
 
+import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 
 import { findEntryByPath } from "@/lib/navigation/registry";
 
+let lastCommittedPathname: string | null = null;
+let pendingRouteNavigation = false;
+
 export function ActivePageLabel() {
   const pathname = usePathname();
   const active = findEntryByPath(pathname);
-  return active ? <p className="sr-only">Đang ở trang: {active.label}</p> : null;
+  const [progressState, setProgressState] = useState<"idle" | "loading" | "completing">(() => {
+    if (
+      pendingRouteNavigation ||
+      (typeof document !== "undefined" &&
+        document.documentElement.getAttribute("data-route-state") === "loading")
+    ) {
+      return "loading";
+    }
+    return "idle";
+  });
+  const prevPathRef = useRef<string>(pathname);
+
+  useEffect(() => {
+    const onDocumentClick = (event: MouseEvent) => {
+      if (
+        event.defaultPrevented ||
+        event.button !== 0 ||
+        event.metaKey ||
+        event.ctrlKey ||
+        event.shiftKey ||
+        event.altKey
+      ) {
+        return;
+      }
+      const target = event.target;
+      if (!(target instanceof Element)) return;
+      const anchor = target.closest("a[href]");
+      if (!(anchor instanceof HTMLAnchorElement)) return;
+      if (anchor.target && anchor.target !== "_self") return;
+      if (anchor.hasAttribute("download")) return;
+
+      const rawHref = anchor.getAttribute("href");
+      if (!rawHref || rawHref.startsWith("#") || rawHref.startsWith("mailto:") || rawHref.startsWith("tel:")) {
+        return;
+      }
+
+      let url: URL;
+      try {
+        url = new URL(anchor.href, window.location.href);
+      } catch {
+        return;
+      }
+      if (url.origin !== window.location.origin) return;
+      if (url.pathname === window.location.pathname && url.search === window.location.search) return;
+
+      pendingRouteNavigation = true;
+      document.documentElement.setAttribute("data-route-state", "loading");
+      setProgressState("loading");
+    };
+
+    document.addEventListener("click", onDocumentClick, true);
+    return () => {
+      document.removeEventListener("click", onDocumentClick, true);
+    };
+  }, []);
+
+  useEffect(() => {
+    const hadPendingNavigation =
+      pendingRouteNavigation ||
+      document.documentElement.getAttribute("data-route-state") === "loading";
+    const pathChanged =
+      (lastCommittedPathname !== null && lastCommittedPathname !== pathname) ||
+      prevPathRef.current !== pathname ||
+      hadPendingNavigation;
+
+    lastCommittedPathname = pathname;
+    prevPathRef.current = pathname;
+    pendingRouteNavigation = false;
+    document.documentElement.removeAttribute("data-route-state");
+
+    const mainEl = document.querySelector("main");
+    const reducedMotion =
+      typeof window !== "undefined" &&
+      typeof window.matchMedia === "function" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if (pathChanged && mainEl instanceof HTMLElement && !reducedMotion) {
+      try {
+        // Pure opacity cross-fade ONLY — zero translateY/scale so page height and scrollbar never jump
+        mainEl.animate(
+          [{ opacity: 0.15 }, { opacity: 1 }],
+          {
+            duration: 170,
+            easing: "cubic-bezier(0.22, 1, 0.36, 1)",
+          },
+        );
+      } catch {
+        // Ignore WAAPI errors in older or headless environments
+      }
+    }
+
+    if (pathChanged && mainEl instanceof HTMLElement) {
+      // Accessibility focus routing when previous focused element was unmounted
+      if (!document.activeElement || document.activeElement === document.body) {
+        const heading = mainEl.querySelector<HTMLElement>("h1");
+        if (heading) {
+          if (!heading.hasAttribute("tabindex")) {
+            heading.setAttribute("tabindex", "-1");
+          }
+          heading.focus({ preventScroll: true });
+        }
+      }
+    }
+
+    if (!pathChanged) return;
+
+    const startTimer = window.setTimeout(() => {
+      setProgressState("loading");
+    }, 0);
+    const completeTimer = window.setTimeout(() => {
+      setProgressState("completing");
+    }, 55);
+    const idleTimer = window.setTimeout(() => {
+      setProgressState("idle");
+    }, 310);
+
+    return () => {
+      window.clearTimeout(startTimer);
+      window.clearTimeout(completeTimer);
+      window.clearTimeout(idleTimer);
+    };
+  }, [pathname]);
+
+  return (
+    <>
+      <div
+        aria-hidden="true"
+        data-route-progress={progressState}
+        className="bi-route-progress"
+      />
+      {active ? <p className="sr-only">Đang ở trang: {active.label}</p> : null}
+    </>
+  );
 }
