@@ -849,7 +849,7 @@ export function VendorFinanceListView({
                   Vendor
                 </th>
                 <th scope="col" className={`${LIST_TH_CLASS} md:min-w-[20rem] md:max-w-[24rem] !whitespace-normal`}>
-                  Sổ theo Dự án × Kế toán phụ trách × Loại HĐ
+                  Sổ theo DA x KT x HĐ
                 </th>
                 <th
                   scope="col"
@@ -867,13 +867,13 @@ export function VendorFinanceListView({
                   </th>
                 ) : null}
                 <th scope="col" className={`${LIST_TH_CLASS} md:max-w-[9.5rem] !whitespace-normal text-center`}>
-                  Trạng thái công nợ
+                  Công nợ
                 </th>
                 <th scope="col" className={`${LIST_TH_CLASS} text-right whitespace-nowrap`}>
                   Bút toán
                 </th>
                 <th scope="col" className={`${LIST_TH_CLASS} whitespace-nowrap`}>
-                  Giao dịch gần nhất
+                  GD gần nhất
                 </th>
                 <th scope="col" className={`${LIST_TH_CLASS} text-right whitespace-nowrap`}>
                   Thao tác
@@ -920,7 +920,7 @@ export function VendorFinanceListView({
                     </td>
 
                     <td
-                      data-label="Sổ theo Dự án × Kế toán phụ trách × Loại HĐ"
+                      data-label="Sổ theo DA x KT x HĐ"
                       className={`${LIST_TD_CLASS} max-md:flex-col max-md:items-stretch max-md:!text-left md:min-w-[20rem] md:max-w-[24rem] whitespace-normal break-words`}
                     >
                       {vendor.sub_ledgers.length === 0 ? (
@@ -1021,7 +1021,7 @@ export function VendorFinanceListView({
                       </td>
                     ) : null}
 
-                    <td data-label="Trạng thái công nợ" className={`${LIST_TD_CLASS} md:max-w-[9.5rem] md:text-center`}>
+                    <td data-label="Công nợ" className={`${LIST_TD_CLASS} md:max-w-[9.5rem] md:text-center`}>
                       <StatusBadge
                         tone={balanceInfo.tone}
                         className="!whitespace-normal justify-center text-center leading-tight"
@@ -1037,7 +1037,7 @@ export function VendorFinanceListView({
                       {vendor.entry_count}
                     </td>
 
-                    <td data-label="Giao dịch gần nhất" className={LIST_TD_CLASS}>
+                    <td data-label="GD gần nhất" className={LIST_TD_CLASS}>
                       <div className="text-xs space-y-0.5 whitespace-nowrap">
                         <p>
                           <span className="text-muted">GD: </span>
