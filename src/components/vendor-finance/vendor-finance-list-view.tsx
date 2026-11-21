@@ -87,7 +87,7 @@ function buildSubLedgerHref(vendorId: string, sub: VendorFinanceListSubLedgerIte
   return `/finance/vendors/${encodeURIComponent(vendorId)}?${sp.toString()}`;
 }
 
-const LIST_TH_CLASS = `${DATA_TABLE_TH_CLASS} !px-2 !py-2.5 text-[11px] leading-tight align-middle`;
+const LIST_TH_CLASS = `${DATA_TABLE_TH_CLASS} !px-2 !py-2.5 text-[11px] leading-tight !text-center align-middle`;
 const LIST_TD_CLASS = `${DATA_TABLE_TD_CLASS} !px-2 !py-2.5 align-middle`;
 
 export function VendorFinanceListView({
@@ -853,7 +853,7 @@ export function VendorFinanceListView({
                 </th>
                 <th
                   scope="col"
-                  className={`${LIST_TH_CLASS} md:max-w-[10.5rem] text-right whitespace-nowrap`}
+                  className={`${LIST_TH_CLASS} md:max-w-[10.5rem] whitespace-nowrap`}
                 >
                   Số dư theo sổ
                 </th>
@@ -861,21 +861,21 @@ export function VendorFinanceListView({
                   <th
                     scope="col"
                     data-testid="vfin-th-shared-advance"
-                    className={`${LIST_TH_CLASS} text-right whitespace-nowrap`}
+                    className={`${LIST_TH_CLASS} whitespace-nowrap`}
                   >
                     Dư ứng
                   </th>
                 ) : null}
-                <th scope="col" className={`${LIST_TH_CLASS} md:max-w-[9.5rem] !whitespace-normal text-center`}>
+                <th scope="col" className={`${LIST_TH_CLASS} md:max-w-[9.5rem] !whitespace-normal`}>
                   Công nợ
                 </th>
-                <th scope="col" className={`${LIST_TH_CLASS} text-right whitespace-nowrap`}>
+                <th scope="col" className={`${LIST_TH_CLASS} whitespace-nowrap`}>
                   Bút toán
                 </th>
                 <th scope="col" className={`${LIST_TH_CLASS} whitespace-nowrap`}>
                   GD gần nhất
                 </th>
-                <th scope="col" className={`${LIST_TH_CLASS} text-right whitespace-nowrap`}>
+                <th scope="col" className={`${LIST_TH_CLASS} whitespace-nowrap`}>
                   Thao tác
                 </th>
               </tr>
@@ -898,10 +898,10 @@ export function VendorFinanceListView({
                   <tr key={vendor.vendor_id} className={DATA_TABLE_ROW_CLASS}>
                     <td
                       data-card-header="true"
-                      className={`${LIST_TD_CLASS} md:w-[10.5rem] md:max-w-[10.5rem] whitespace-normal break-words`}
+                      className={`${LIST_TD_CLASS} md:w-[10.5rem] md:max-w-[10.5rem] md:text-center whitespace-normal break-words`}
                     >
-                      <div className="space-y-1">
-                        <div className="flex flex-wrap items-center gap-1.5">
+                      <div className="space-y-1 md:flex md:flex-col md:items-center md:text-center">
+                        <div className="flex flex-wrap items-center md:justify-center gap-1.5">
                           <Link
                             href={detailHref}
                             className="font-semibold text-foreground hover:text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40 rounded break-words"
@@ -921,12 +921,12 @@ export function VendorFinanceListView({
 
                     <td
                       data-label="Sổ theo DA x KT x HĐ"
-                      className={`${LIST_TD_CLASS} max-md:flex-col max-md:items-stretch max-md:!text-left md:min-w-[20rem] md:max-w-[24rem] whitespace-normal break-words`}
+                      className={`${LIST_TD_CLASS} max-md:flex-col max-md:items-stretch max-md:!text-left md:min-w-[20rem] md:max-w-[24rem] text-left whitespace-normal break-words`}
                     >
                       {vendor.sub_ledgers.length === 0 ? (
                         <span className="text-xs text-muted">Chưa liên kết sổ dự án</span>
                       ) : (
-                        <div className="w-full space-y-1.5" data-testid="vfin-vendor-subledger-list">
+                        <div className="w-full space-y-1.5 text-left" data-testid="vfin-vendor-subledger-list">
                           {vendor.sub_ledgers.map((sub, idx) => {
                             const subBal = formatVendorBalancePresentation({
                               current_balance_minor: sub.current_balance_minor,
@@ -939,7 +939,7 @@ export function VendorFinanceListView({
                               <Link
                                 key={subKey}
                                 href={buildSubLedgerHref(vendor.vendor_id, sub)}
-                                className="flex flex-wrap items-center justify-between gap-2 rounded-lg border border-border bg-surface-muted/40 px-2.5 py-1.5 text-xs transition-all duration-150 hover:border-primary/50 hover:bg-surface hover:shadow-2xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40"
+                                className="flex flex-wrap items-center justify-between gap-2 rounded-lg border border-border bg-surface-muted/40 px-2.5 py-1.5 text-left text-xs transition-all duration-150 hover:border-primary/50 hover:bg-surface hover:shadow-2xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40"
                               >
                                 <span className="flex min-w-0 flex-1 flex-wrap items-center gap-1.5 leading-snug">
                                   <StatusBadge
@@ -976,7 +976,7 @@ export function VendorFinanceListView({
 
                     <td
                       data-label="Số dư theo sổ"
-                      className={`${LIST_TD_CLASS} md:max-w-[10.5rem] text-right font-mono tabular-nums`}
+                      className={`${LIST_TD_CLASS} md:max-w-[10.5rem] md:text-center font-mono tabular-nums`}
                     >
                       {vendor.balance_direction === "MULTI_LEDGER" ? (
                         <div className="space-y-0.5 text-xs">
@@ -1007,7 +1007,7 @@ export function VendorFinanceListView({
                       <td
                         data-label="Dư ứng"
                         data-testid="vfin-vendor-shared-advance"
-                        className={`${LIST_TD_CLASS} text-right font-mono tabular-nums whitespace-nowrap`}
+                        className={`${LIST_TD_CLASS} md:text-center font-mono tabular-nums whitespace-nowrap`}
                       >
                         <span
                           className={`whitespace-nowrap ${
@@ -1032,12 +1032,12 @@ export function VendorFinanceListView({
 
                     <td
                       data-label="Bút toán"
-                      className={`${LIST_TD_CLASS} text-right font-mono tabular-nums whitespace-nowrap`}
+                      className={`${LIST_TD_CLASS} md:text-center font-mono tabular-nums whitespace-nowrap`}
                     >
                       {vendor.entry_count}
                     </td>
 
-                    <td data-label="GD gần nhất" className={LIST_TD_CLASS}>
+                    <td data-label="GD gần nhất" className={`${LIST_TD_CLASS} md:text-center`}>
                       <div className="text-xs space-y-0.5 whitespace-nowrap">
                         <p>
                           <span className="text-muted">GD: </span>
@@ -1054,8 +1054,8 @@ export function VendorFinanceListView({
                       </div>
                     </td>
 
-                    <td data-card-actions="true" className={`${LIST_TD_CLASS} text-right`}>
-                      <RowActionCluster>
+                    <td data-card-actions="true" className={`${LIST_TD_CLASS} md:text-center`}>
+                      <RowActionCluster className="md:justify-center">
                         <Link
                           href={detailHref}
                           aria-label={`Xem sổ cái của ${vendor.display_name}`}
