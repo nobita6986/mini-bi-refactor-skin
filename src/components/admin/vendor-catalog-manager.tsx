@@ -402,10 +402,15 @@ export function VendorCatalogManager() {
               <form onSubmit={submit} className="space-y-4">
                 <ReasonField value={form.reason} onChange={(value) => changeForm("reason", value)} />
                 {formError ? <p role="alert" className="text-sm text-red-700">{formError}</p> : null}
-                <button type="submit" disabled={busy || pendingIntent !== null || conflictIntent !== null}
-                  className={primaryButton}>
-                  {busy ? "Đang lưu…" : dialog.active ? "Xác nhận kích hoạt" : "Xác nhận ngừng"}
-                </button>
+                <div className="flex flex-wrap justify-end gap-2 border-t border-border pt-4">
+                  <button type="button" disabled={busy || conflictIntent !== null} onClick={() => setDialog(null)} className={button}>
+                    Hủy
+                  </button>
+                  <button type="submit" disabled={busy || pendingIntent !== null || conflictIntent !== null}
+                    className={primaryButton}>
+                    {busy ? "Đang lưu…" : dialog.active ? "Xác nhận kích hoạt" : "Xác nhận ngừng"}
+                  </button>
+                </div>
               </form>
             </div>
           ) : (
@@ -429,10 +434,15 @@ export function VendorCatalogManager() {
               ) : null}
               <ReasonField value={form.reason} onChange={(value) => changeForm("reason", value)} />
               {formError ? <p role="alert" className="text-sm text-red-700">{formError}</p> : null}
-              <button type="submit" disabled={busy || pendingIntent !== null || conflictIntent !== null}
-                className={primaryButton}>
-                {busy ? "Đang lưu…" : dialog?.kind === "create" ? "Tạo nhà cung cấp" : "Lưu thay đổi"}
-              </button>
+              <div className="flex flex-wrap justify-end gap-2 border-t border-border pt-4">
+                <button type="button" disabled={busy || conflictIntent !== null} onClick={() => setDialog(null)} className={button}>
+                  Hủy
+                </button>
+                <button type="submit" disabled={busy || pendingIntent !== null || conflictIntent !== null}
+                  className={primaryButton}>
+                  {busy ? "Đang lưu…" : dialog?.kind === "create" ? "Tạo nhà cung cấp" : "Lưu thay đổi"}
+                </button>
+              </div>
             </form>
           )}
         </FormDialog>

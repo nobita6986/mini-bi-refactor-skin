@@ -46,7 +46,8 @@ export function AdminSubnav({
                     <DropdownMenu.Content
                       align="start"
                       sideOffset={6}
-                      className="z-50 min-w-56 rounded-md border border-border bg-surface p-1 shadow-lg"
+                      data-ui-popover-motion="true"
+                      className="z-50 min-w-56 rounded-[10px] border border-border bg-surface p-1 shadow-[var(--shadow-card-hover)]"
                     >
                       {item.sections.map((section) => {
                         const sectionCurrent = isAdminSectionActive(pathname, section.href);
@@ -56,9 +57,9 @@ export function AdminSubnav({
                               href={section.href}
                               aria-current={sectionCurrent ? "page" : undefined}
                               className={cn(
-                                "flex min-h-10 items-center rounded px-3 text-sm outline-none transition-colors hover:bg-surface-hover focus-visible:bg-surface-hover",
+                                "flex min-h-10 items-center rounded-md px-3 text-sm font-medium outline-none transition-colors hover:bg-surface-hover hover:text-[var(--navy)] focus-visible:bg-surface-hover",
                                 sectionCurrent
-                                  ? "bg-primary/10 font-semibold text-foreground"
+                                  ? "bg-primary/10 font-semibold text-primary"
                                   : "text-muted",
                               )}
                             >

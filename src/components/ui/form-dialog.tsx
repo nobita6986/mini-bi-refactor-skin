@@ -75,8 +75,8 @@ export function FormDialog({
             }
           }}
           className={cn(
-            "fixed inset-x-0 bottom-0 z-50 max-h-[92dvh] w-full overflow-y-auto rounded-t-2xl border border-border bg-surface p-4 pb-[max(1.25rem,env(safe-area-inset-bottom))] text-foreground shadow-[var(--shadow-dialog)] focus:outline-none",
-            "sm:inset-x-auto sm:bottom-auto sm:left-1/2 sm:top-1/2 sm:max-h-[90dvh] sm:w-[min(38rem,calc(100vw-2rem))] sm:-translate-x-1/2 sm:-translate-y-1/2 sm:rounded-xl sm:p-6",
+            "fixed inset-x-0 bottom-0 z-50 max-h-[92dvh] w-full overflow-y-auto rounded-t-2xl border border-border border-t-2 border-t-primary bg-surface p-4 pb-[max(1.25rem,env(safe-area-inset-bottom))] text-foreground shadow-[var(--shadow-dialog)] focus:outline-none",
+            "sm:inset-x-auto sm:bottom-auto sm:left-1/2 sm:top-1/2 sm:max-h-[90dvh] sm:w-[min(38rem,calc(100vw-2rem))] sm:-translate-x-1/2 sm:-translate-y-1/2 sm:rounded-2xl sm:p-6",
             contentClassName,
           )}
         >
@@ -85,7 +85,7 @@ export function FormDialog({
             aria-hidden="true"
             className="mx-auto mb-3 h-1.5 w-10 rounded-full bg-border sm:hidden"
           />
-          <div className="flex items-start justify-between gap-4 border-b border-border pb-3">
+          <div className="flex items-start justify-between gap-4 border-b border-border pb-3.5">
             <div>
               <Dialog.Title className="text-lg sm:text-xl font-semibold tracking-tight text-[var(--navy)]">
                 {title}
