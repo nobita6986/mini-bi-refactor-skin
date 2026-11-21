@@ -1559,11 +1559,12 @@ export function LeaveManagementWorkspace({
     1,
     Math.ceil((reportData?.total ?? 0) / (reportData?.limit ?? REPORT_PAGE_SIZE)),
   );
+  const COMPACT_TH_CLASS = `${DATA_TABLE_TH_CLASS} !px-2.5 !py-2.5 text-[11px] leading-tight align-middle !whitespace-normal`;
+  const COMPACT_TD_CLASS = `${DATA_TABLE_TD_CLASS} !px-2.5 !py-2.5 text-xs sm:text-[13px] align-middle whitespace-normal break-words`;
 
   return (
     <PageShell dataTestId="leave-management-workspace">
       <PageHeader
-        eyebrow="Quản trị Nhân sự & Chấm công"
         title={viewMode === "admin" ? "Quản trị nghỉ phép" : "Nghỉ phép của tôi"}
         badge={
           viewMode === "personal" && summary ? (
@@ -1577,7 +1578,7 @@ export function LeaveManagementWorkspace({
         }
         description={
           viewMode === "admin"
-            ? "Cấu hình chính sách, hồ sơ, người duyệt và số dư phép; theo dõi báo cáo chốt công & phép theo quyền được cấp."
+            ? undefined
             : "Theo dõi quỹ phép cá nhân, tạo đơn xin nghỉ sáng/chiều/cả ngày và xử lý các đơn trong hộp thư duyệt được giao."
         }
         actions={
@@ -2677,14 +2678,14 @@ export function LeaveManagementWorkspace({
                     <table className={DATA_TABLE_CLASS}>
                       <thead className={DATA_TABLE_HEAD_CLASS}>
                         <tr>
-                          <th className={DATA_TABLE_TH_CLASS}>Tài khoản / Nhân sự</th>
-                          <th className={DATA_TABLE_TH_CLASS}>Trạng thái phép</th>
-                          <th className={DATA_TABLE_TH_CLASS}>Bộ phận / Team</th>
-                          <th className={DATA_TABLE_TH_CLASS}>Ngày vào / Chính thức</th>
-                          <th className={DATA_TABLE_TH_CLASS}>Tăng thâm niên tiếp theo</th>
-                          <th className={DATA_TABLE_TH_CLASS}>Tuyến duyệt</th>
-                          <th className={DATA_TABLE_TH_CLASS}>Phép khả dụng</th>
-                          <th className={DATA_TABLE_TH_CLASS}>Thao tác</th>
+                          <th className={`${COMPACT_TH_CLASS} md:w-[13rem]`}>Tài khoản / Nhân sự</th>
+                          <th className={`${COMPACT_TH_CLASS} md:w-[8.5rem] text-center`}>Trạng thái phép</th>
+                          <th className={`${COMPACT_TH_CLASS} md:w-[8.5rem]`}>Bộ phận / Team</th>
+                          <th className={`${COMPACT_TH_CLASS} md:w-[9.5rem]`}>Ngày vào / Chính thức</th>
+                          <th className={`${COMPACT_TH_CLASS} md:w-[7.5rem] text-center`}>Tăng thâm niên tiếp theo</th>
+                          <th className={`${COMPACT_TH_CLASS} md:w-[13.5rem]`}>Tuyến duyệt</th>
+                          <th className={`${COMPACT_TH_CLASS} md:w-[6.5rem] text-right`}>Phép khả dụng</th>
+                          <th className={`${COMPACT_TH_CLASS} md:w-[6.5rem] text-right`}>Thao tác</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -2695,43 +2696,59 @@ export function LeaveManagementWorkspace({
                           return (
                             <tr key={emp.account.app_user_id} className={DATA_TABLE_ROW_CLASS}>
                               <td
-                                className={DATA_TABLE_TD_CLASS}
+                                className={`${COMPACT_TD_CLASS} md:w-[13rem]`}
                                 data-label="Tài khoản / Nhân sự"
                               >
-                                <div className="font-medium text-foreground">
+                                <div className="font-semibold text-foreground">
                                   {emp.account.display_name}
                                 </div>
                                 <div className="text-xs text-muted">
                                   {emp.account.login_id ? `@${emp.account.login_id}` : ""}
-                                  {emp.account.personnel_code
+                                  {emp.account.personnel_code &&
+                                  emp.account.personnel_code !== emp.account.login_id
                                     ? ` · ${emp.account.personnel_code}`
                                     : ""}
                                 </div>
                                 {!emp.account.account_enabled ? (
                                   <div className="mt-1">
-                                    <StatusBadge tone="neutral">Đã ngừng hoạt động</StatusBadge>
+                                    <StatusBadge tone="neutral">Đã ngừng HĐ</StatusBadge>
                                   </div>
                                 ) : null}
                               </td>
-                              <td className={DATA_TABLE_TD_CLASS} data-label="Trạng thái phép">
+                              <td
+                                className={`${COMPACT_TD_CLASS} md:w-[8.5rem] md:text-center`}
+                                data-label="Trạng thái phép"
+                              >
                                 {emp.profile.is_shared_non_employee ? (
-                                  <StatusBadge tone="neutral">
-                                    Tài khoản dùng chung (Loại trừ)
+                                  <StatusBadge
+                                    tone="neutral"
+                                    className="!whitespace-normal justify-center text-center leading-tight"
+                                  >
+                                    TK dùng chung
                                   </StatusBadge>
                                 ) : (
-                                  <StatusBadge tone={empBadge.tone} dot>
+                                  <StatusBadge
+                                    tone={empBadge.tone}
+                                    dot
+                                    className="!whitespace-normal justify-center text-center leading-tight"
+                                  >
                                     {empBadge.label}
                                   </StatusBadge>
                                 )}
                               </td>
-                              <td className={DATA_TABLE_TD_CLASS} data-label="Bộ phận / Team">
-                                <div>{leaveUnitKindLabel(emp.profile.unit_kind)}</div>
+                              <td
+                                className={`${COMPACT_TD_CLASS} md:w-[8.5rem]`}
+                                data-label="Bộ phận / Team"
+                              >
+                                <div className="font-medium text-foreground">
+                                  {leaveUnitKindLabel(emp.profile.unit_kind)}
+                                </div>
                                 {emp.routing.team_name ? (
                                   <div className="text-xs text-muted">{emp.routing.team_name}</div>
                                 ) : null}
                               </td>
                               <td
-                                className={DATA_TABLE_TD_CLASS}
+                                className={`${COMPACT_TD_CLASS} md:w-[9.5rem] whitespace-nowrap`}
                                 data-label="Ngày vào / Chính thức"
                               >
                                 <div className="text-xs font-mono">
@@ -2742,7 +2759,7 @@ export function LeaveManagementWorkspace({
                                 </div>
                               </td>
                               <td
-                                className={DATA_TABLE_TD_CLASS}
+                                className={`${COMPACT_TD_CLASS} md:w-[7.5rem] md:text-center`}
                                 data-label="Tăng thâm niên tiếp theo"
                               >
                                 {emp.profile.next_seniority_effective_date ? (
@@ -2754,8 +2771,11 @@ export function LeaveManagementWorkspace({
                                   <span className="text-xs text-muted">—</span>
                                 )}
                               </td>
-                              <td className={DATA_TABLE_TD_CLASS} data-label="Tuyến duyệt">
-                                <div className="text-xs">
+                              <td
+                                className={`${COMPACT_TD_CLASS} md:w-[13.5rem]`}
+                                data-label="Tuyến duyệt"
+                              >
+                                <div className="text-xs font-medium text-foreground leading-snug">
                                   {leaveRouteKindLabel(
                                     emp.routing.route_kind,
                                     emp.routing.team_name,
@@ -2763,25 +2783,36 @@ export function LeaveManagementWorkspace({
                                   )}
                                 </div>
                                 {emp.routing.fallback_reason ? (
-                                  <div className="text-[11px] text-amber-700 dark:text-amber-300">
+                                  <div className="mt-0.5 text-[11px] leading-snug text-amber-700 dark:text-amber-300">
                                     {leaveFallbackReasonLabel(emp.routing.fallback_reason)}
                                   </div>
                                 ) : null}
                               </td>
-                              <td className={DATA_TABLE_TD_CLASS} data-label="Phép khả dụng">
+                              <td
+                                className={`${COMPACT_TD_CLASS} md:w-[6.5rem] text-right whitespace-nowrap`}
+                                data-label="Phép khả dụng"
+                              >
                                 <strong className="font-mono text-primary">
                                   {formatHalfDayUnits(emp.balance.available_units)}
                                 </strong>
                               </td>
-                              <td className={DATA_TABLE_TD_CLASS} data-label="Thao tác">
+                              <td
+                                className={`${COMPACT_TD_CLASS} md:w-[6.5rem] text-right`}
+                                data-label="Thao tác"
+                              >
                                 <RowActionCluster>
                                   <Button
                                     variant="secondary"
                                     size="sm"
+                                    className="md:!h-auto md:!min-h-8 md:!px-2.5 md:!py-1.5 md:!text-xs !whitespace-normal text-center leading-tight"
                                     data-testid={`leave-edit-profile-${emp.account.app_user_id}`}
                                     onClick={() => openEditProfileDialog(emp)}
                                   >
-                                    Cấu hình hồ sơ
+                                    <span className="inline-block text-center leading-tight">
+                                      Cấu hình
+                                      <br />
+                                      hồ sơ
+                                    </span>
                                   </Button>
                                 </RowActionCluster>
                               </td>
@@ -3274,14 +3305,14 @@ export function LeaveManagementWorkspace({
                       <table className={DATA_TABLE_CLASS}>
                         <thead className={DATA_TABLE_HEAD_CLASS}>
                           <tr>
-                            <th className={DATA_TABLE_TH_CLASS}>Nhân sự (Tài khoản)</th>
-                            <th className={DATA_TABLE_TH_CLASS}>Phép chuyển năm (Ngày)</th>
-                            <th className={DATA_TABLE_TH_CLASS}>
+                            <th className={`${COMPACT_TH_CLASS} md:w-[15rem]`}>Nhân sự (Tài khoản)</th>
+                            <th className={`${COMPACT_TH_CLASS} md:w-[8.5rem]`}>Phép chuyển năm (Ngày)</th>
+                            <th className={`${COMPACT_TH_CLASS} md:w-[13rem]`}>
                               Phép đầu kỳ năm nay — Số dư mục tiêu sau đối soát (Ngày)
                             </th>
-                            <th className={DATA_TABLE_TH_CLASS}>Phép thâm niên (Ngày)</th>
-                            <th className={DATA_TABLE_TH_CLASS}>Ghi chú</th>
-                            <th className={DATA_TABLE_TH_CLASS}>Xóa</th>
+                            <th className={`${COMPACT_TH_CLASS} md:w-[8.5rem]`}>Phép thâm niên (Ngày)</th>
+                            <th className={COMPACT_TH_CLASS}>Ghi chú</th>
+                            <th className={`${COMPACT_TH_CLASS} md:w-[4.5rem] text-right`}>Xóa</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -3563,14 +3594,14 @@ export function LeaveManagementWorkspace({
                           <table className={DATA_TABLE_CLASS}>
                             <thead className={DATA_TABLE_HEAD_CLASS}>
                               <tr>
-                                <th className={DATA_TABLE_TH_CLASS}>#</th>
-                                <th className={DATA_TABLE_TH_CLASS}>Nhân sự</th>
-                                <th className={DATA_TABLE_TH_CLASS}>Chuyển năm</th>
-                                <th className={DATA_TABLE_TH_CLASS}>
+                                <th className={COMPACT_TH_CLASS}>#</th>
+                                <th className={COMPACT_TH_CLASS}>Nhân sự</th>
+                                <th className={COMPACT_TH_CLASS}>Chuyển năm</th>
+                                <th className={COMPACT_TH_CLASS}>
                                   Số dư mục tiêu năm nay (Đối soát)
                                 </th>
-                                <th className={DATA_TABLE_TH_CLASS}>Thâm niên</th>
-                                <th className={DATA_TABLE_TH_CLASS}>Kết quả kiểm tra</th>
+                                <th className={COMPACT_TH_CLASS}>Thâm niên</th>
+                                <th className={COMPACT_TH_CLASS}>Kết quả kiểm tra</th>
                               </tr>
                             </thead>
                             <tbody>
@@ -3764,16 +3795,16 @@ export function LeaveManagementWorkspace({
               <table className={DATA_TABLE_CLASS}>
                 <thead className={DATA_TABLE_HEAD_CLASS}>
                   <tr>
-                    <th className={DATA_TABLE_TH_CLASS}>Nhân sự</th>
-                    <th className={DATA_TABLE_TH_CLASS}>Bộ phận / Team</th>
-                    <th className={DATA_TABLE_TH_CLASS}>Trạng thái & Mốc làm việc</th>
-                    <th className={DATA_TABLE_TH_CLASS}>Chấm công trong tháng</th>
-                    <th className={DATA_TABLE_TH_CLASS}>Chi tiết ngày nghỉ, loại nghỉ & buổi nghỉ</th>
-                    <th className={DATA_TABLE_TH_CLASS}>Tổng hợp loại nghỉ (Tháng)</th>
-                    <th className={DATA_TABLE_TH_CLASS}>Chờ duyệt (Tháng)</th>
-                    <th className={DATA_TABLE_TH_CLASS}>Nguồn phép năm (CN / Tháng / TN)</th>
-                    <th className={DATA_TABLE_TH_CLASS}>Đã dùng / Giữ chỗ / Hết hạn</th>
-                    <th className={DATA_TABLE_TH_CLASS}>Phép năm khả dụng cuối kỳ</th>
+                    <th className={COMPACT_TH_CLASS}>Nhân sự</th>
+                    <th className={COMPACT_TH_CLASS}>Bộ phận / Team</th>
+                    <th className={COMPACT_TH_CLASS}>Trạng thái & Mốc làm việc</th>
+                    <th className={COMPACT_TH_CLASS}>Chấm công trong tháng</th>
+                    <th className={COMPACT_TH_CLASS}>Chi tiết ngày nghỉ, loại nghỉ & buổi nghỉ</th>
+                    <th className={COMPACT_TH_CLASS}>Tổng hợp loại nghỉ (Tháng)</th>
+                    <th className={COMPACT_TH_CLASS}>Chờ duyệt (Tháng)</th>
+                    <th className={COMPACT_TH_CLASS}>Nguồn phép năm (CN / Tháng / TN)</th>
+                    <th className={COMPACT_TH_CLASS}>Đã dùng / Giữ chỗ / Hết hạn</th>
+                    <th className={`${COMPACT_TH_CLASS} text-right`}>Phép năm khả dụng cuối kỳ</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -3785,7 +3816,7 @@ export function LeaveManagementWorkspace({
                     const leaveDays = Array.isArray(row.leave_days) ? row.leave_days : [];
                     return (
                       <tr key={row.app_user_id} className={DATA_TABLE_ROW_CLASS}>
-                        <td className={DATA_TABLE_TD_CLASS} data-label="Nhân sự">
+                        <td className={COMPACT_TD_CLASS} data-label="Nhân sự">
                           <div className="font-medium text-foreground">
                             {row.account?.display_name ?? row.account?.login_id ?? row.app_user_id}
                           </div>
@@ -3796,14 +3827,14 @@ export function LeaveManagementWorkspace({
                             {row.account?.login_id ? `@${row.account.login_id}` : ""}
                           </div>
                         </td>
-                        <td className={DATA_TABLE_TD_CLASS} data-label="Bộ phận / Team">
+                        <td className={COMPACT_TD_CLASS} data-label="Bộ phận / Team">
                           <div>{leaveUnitKindLabel(row.unit_kind)}</div>
                           {row.routing?.team_name ? (
                             <div className="text-xs text-muted">{row.routing.team_name}</div>
                           ) : null}
                         </td>
                         <td
-                          className={DATA_TABLE_TD_CLASS}
+                          className={COMPACT_TD_CLASS}
                           data-label="Trạng thái & Mốc làm việc"
                         >
                           <StatusBadge tone={empBadge.tone}>{empBadge.label}</StatusBadge>
@@ -3813,7 +3844,7 @@ export function LeaveManagementWorkspace({
                           </div>
                         </td>
                         <td
-                          className={DATA_TABLE_TD_CLASS}
+                          className={COMPACT_TD_CLASS}
                           data-label="Chấm công trong tháng"
                         >
                           <div className="font-mono font-semibold text-foreground">
@@ -3835,7 +3866,7 @@ export function LeaveManagementWorkspace({
                           )}
                         </td>
                         <td
-                          className={DATA_TABLE_TD_CLASS}
+                          className={COMPACT_TD_CLASS}
                           data-label="Chi tiết ngày nghỉ, loại nghỉ & buổi nghỉ"
                         >
                           {leaveDays.length > 0 ? (
@@ -3861,7 +3892,7 @@ export function LeaveManagementWorkspace({
                           )}
                         </td>
                         <td
-                          className={DATA_TABLE_TD_CLASS}
+                          className={COMPACT_TD_CLASS}
                           data-label="Tổng hợp loại nghỉ (Tháng)"
                         >
                           <div className="space-y-0.5 text-xs font-mono">
@@ -3903,13 +3934,13 @@ export function LeaveManagementWorkspace({
                             ) : null}
                           </div>
                         </td>
-                        <td className={DATA_TABLE_TD_CLASS} data-label="Chờ duyệt (Tháng)">
+                        <td className={COMPACT_TD_CLASS} data-label="Chờ duyệt (Tháng)">
                           <span className="font-mono">
                             {formatHalfDayUnits(row.month_pending_units)}
                           </span>
                         </td>
                         <td
-                          className={DATA_TABLE_TD_CLASS}
+                          className={COMPACT_TD_CLASS}
                           data-label="Nguồn phép năm (CN / Tháng / TN)"
                         >
                           <span className="font-mono text-xs">
@@ -3919,7 +3950,7 @@ export function LeaveManagementWorkspace({
                           </span>
                         </td>
                         <td
-                          className={DATA_TABLE_TD_CLASS}
+                          className={COMPACT_TD_CLASS}
                           data-label="Đã dùng / Giữ chỗ / Hết hạn"
                         >
                           <span className="font-mono text-xs">
@@ -3929,7 +3960,7 @@ export function LeaveManagementWorkspace({
                           </span>
                         </td>
                         <td
-                          className={DATA_TABLE_TD_CLASS}
+                          className={`${COMPACT_TD_CLASS} text-right`}
                           data-label="Phép năm khả dụng cuối kỳ"
                         >
                           <strong className="font-mono text-primary">

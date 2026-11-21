@@ -157,9 +157,9 @@ const tabClass =
 const buttonClass = buttonClasses({ variant: "secondary", size: "md" });
 const primaryClass = buttonClasses({ variant: "primary", size: "md" });
 const inputClass =
-  "min-h-11 sm:min-h-9 w-full rounded-lg border border-border/80 bg-surface-muted/45 px-3 text-base sm:text-sm text-foreground " +
+  "min-h-11 sm:min-h-10 w-full rounded-lg border border-border bg-surface px-3 text-base sm:text-sm text-foreground " +
   "outline-none transition-colors duration-[var(--ui-motion-hover,160ms)] motion-reduce:transition-none " +
-  "hover:border-border focus:bg-surface focus:border-primary focus-visible:ring-2 focus-visible:ring-ring/40 disabled:cursor-not-allowed " +
+  "focus:border-primary focus-visible:ring-2 focus-visible:ring-ring/40 disabled:cursor-not-allowed " +
   "disabled:bg-muted/10 disabled:text-muted";
 const errorClass =
   "rounded-lg border border-red-500/40 bg-red-50 p-3 text-sm text-red-700 " +
@@ -1238,30 +1238,6 @@ function SubmissionTable({ submissions }: { submissions: readonly SubmissionRead
   );
 }
 
-const AVATAR_TONES = [
-  "bg-blue-500/12 text-blue-700 dark:bg-blue-400/15 dark:text-blue-200",
-  "bg-emerald-500/12 text-emerald-700 dark:bg-emerald-400/15 dark:text-emerald-200",
-  "bg-amber-500/12 text-amber-800 dark:bg-amber-400/15 dark:text-amber-200",
-  "bg-violet-500/12 text-violet-700 dark:bg-violet-400/15 dark:text-violet-200",
-  "bg-rose-500/12 text-rose-700 dark:bg-rose-400/15 dark:text-rose-200",
-  "bg-cyan-500/12 text-cyan-800 dark:bg-cyan-400/15 dark:text-cyan-200",
-] as const;
-
-function workerAvatarPresentation(displayName: string, seed: string): { initials: string; toneClass: string } {
-  const parts = displayName.trim().split(/\s+/).filter(Boolean);
-  const first = parts[0]?.[0] ?? "";
-  const last = parts.length > 1 ? (parts[parts.length - 1]?.[0] ?? "") : (parts[0]?.[1] ?? "");
-  const initials = (first + last).toUpperCase() || "NL";
-  let hash = 0;
-  for (let i = 0; i < seed.length; i += 1) {
-    hash = (hash * 31 + seed.charCodeAt(i)) >>> 0;
-  }
-  return {
-    initials,
-    toneClass: AVATAR_TONES[hash % AVATAR_TONES.length],
-  };
-}
-
 function WorkerTable({
   rows, quickOffboardingMode, selectedQuickOffboardingIds, onToggleQuickOffboarding,
   onViewDetail, onPropose, onCorrect,
@@ -1276,12 +1252,13 @@ function WorkerTable({
   onPropose: (row: WorkerDirectoryRow, opener: HTMLElement | null) => void;
   onCorrect: (row: WorkerDirectoryRow, opener: HTMLElement | null) => void;
 }) {
-  const rowSecondaryBtn = buttonClasses({ variant: "secondary", size: "sm" });
-  const rowPrimaryBtn = buttonClasses({ variant: "primary", size: "sm" });
-  const rowSoftBtn = buttonClasses({ variant: "soft", size: "sm" });
+  const compactActionClass = " md:!h-7 md:!min-h-7 md:!px-2.5 md:!py-0.5 md:!text-xs justify-center";
+  const rowSecondaryBtn = buttonClasses({ variant: "secondary", size: "sm" }) + compactActionClass;
+  const rowPrimaryBtn = buttonClasses({ variant: "primary", size: "sm" }) + compactActionClass;
+  const rowSoftBtn = buttonClasses({ variant: "soft", size: "sm" }) + compactActionClass;
   return (
     <DataTableContainer scrollClassName="overflow-x-auto">
-      <table className={DATA_TABLE_CLASS + " min-w-[900px]"}>
+      <table className={DATA_TABLE_CLASS}>
         <caption className="sr-only">Danh sách người lao động theo quan hệ đã chọn</caption>
         <thead className={DATA_TABLE_HEAD_CLASS}>
           <tr>
@@ -1306,11 +1283,10 @@ function WorkerTable({
               : row.employment_status === "UNCONFIRMED"
                 ? "warning"
                 : "neutral";
-            const avatar = workerAvatarPresentation(row.display_name, row.employee_code);
             return (
               <tr key={row.entry_id} className={DATA_TABLE_ROW_CLASS}>
                 <td className={DATA_TABLE_TD_CLASS + " font-semibold"} data-card-header="true">
-                  <span className="flex items-center gap-2.5">
+                  <span className="flex items-center gap-2">
                     {quickOffboardingMode ? (
                       <input type="checkbox" className="size-4 shrink-0 accent-primary"
                         aria-label={`Chọn ${row.display_name} (${row.employee_code}) để cho nghỉ`}
@@ -1321,12 +1297,6 @@ function WorkerTable({
                           : undefined}
                         onChange={() => onToggleQuickOffboarding(row.entry_id)} />
                     ) : null}
-                    <span
-                      aria-hidden="true"
-                      className={`inline-flex size-7 shrink-0 items-center justify-center rounded-full text-[11px] font-semibold tracking-tight ${avatar.toneClass}`}
-                    >
-                      {avatar.initials}
-                    </span>
                     <span>{row.display_name}</span>
                   </span>
                 </td>
@@ -1357,8 +1327,8 @@ function WorkerTable({
                 <td className={DATA_TABLE_TD_CLASS} data-label="Loại hình">
                   {row.labor_type_display}
                 </td>
-                <td className={DATA_TABLE_TD_CLASS + " text-right"} data-card-actions="true">
-                  <RowActionCluster>
+                <td className={DATA_TABLE_TD_CLASS + " text-right md:w-[7.5rem]"} data-card-actions="true">
+                  <RowActionCluster className="md:flex-col md:items-stretch md:gap-1">
                     <button type="button" className={rowSecondaryBtn}
                       onClick={(event) => onViewDetail(row, event.currentTarget)}>
                       Xem chi tiết
@@ -1372,7 +1342,7 @@ function WorkerTable({
                     {canDirectEdit ? (
                       <button type="button" className={rowPrimaryBtn}
                         onClick={(event) => onCorrect(row, event.currentTarget)}>
-                        Sửa trực tiếp
+                        Sửa thông tin
                       </button>
                     ) : null}
                   </RowActionCluster>

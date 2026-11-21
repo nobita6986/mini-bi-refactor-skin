@@ -565,7 +565,7 @@ test("T1A Hotfix Issue #2: WorkerTable RowActionCluster omits read-only explanat
   assert.match(tableSource, /\{!canDirectEdit && cta\.show \? \(/);
   assert.match(tableSource, /Đề xuất thay đổi/);
   assert.match(tableSource, /\{canDirectEdit \? \(/);
-  assert.match(tableSource, /Sửa trực tiếp/);
+  assert.match(tableSource, /Sửa (?:trực tiếp|thông tin)/);
   assert.doesNotMatch(
     tableSource,
     /cta\.message/,

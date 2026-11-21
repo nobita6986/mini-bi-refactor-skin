@@ -15,15 +15,15 @@ export type ButtonSize = "md" | "sm" | "icon-sm";
 
 const VARIANT_CLASSES: Readonly<Record<ButtonVariant, string>> = {
   primary:
-    "border border-transparent bg-primary text-on-primary shadow-2xs hover:bg-[var(--primary-hover)]",
+    "border border-transparent bg-primary text-on-primary shadow-2xs hover:bg-[var(--primary-hover)] hover:shadow-xs",
   secondary:
-    "border border-border bg-surface text-[var(--navy)] hover:border-primary/40 hover:bg-surface-muted",
+    "border border-border bg-surface text-[var(--navy)] shadow-2xs hover:border-primary/45 hover:bg-surface-muted hover:shadow-xs",
   outline:
-    "border border-border bg-surface text-[var(--navy)] hover:border-primary hover:bg-surface-muted",
+    "border border-border bg-surface text-[var(--navy)] shadow-2xs hover:border-primary hover:bg-surface-muted hover:shadow-xs",
   soft:
-    "border border-primary/35 bg-[var(--selected-bg)] text-primary hover:bg-primary hover:text-on-primary",
+    "border border-primary/35 bg-[var(--selected-bg)] text-primary hover:bg-primary hover:text-on-primary hover:shadow-xs",
   danger:
-    "border border-transparent bg-rose-600 text-white hover:bg-rose-700",
+    "border border-transparent bg-rose-600 text-white shadow-2xs hover:bg-rose-700 hover:shadow-xs",
   "danger-outline":
     "border border-rose-500/35 bg-rose-500/10 text-rose-700 hover:bg-rose-500/15 dark:text-rose-200",
   ghost:

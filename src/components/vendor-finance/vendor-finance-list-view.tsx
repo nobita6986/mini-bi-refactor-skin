@@ -90,31 +90,6 @@ function buildSubLedgerHref(vendorId: string, sub: VendorFinanceListSubLedgerIte
 const LIST_TH_CLASS = `${DATA_TABLE_TH_CLASS} !px-2 !py-2.5 text-[11px] leading-tight align-middle`;
 const LIST_TD_CLASS = `${DATA_TABLE_TD_CLASS} !px-2 !py-2.5 align-middle`;
 
-const VENDOR_AVATAR_TONES = [
-  "bg-blue-500/12 text-blue-700 dark:bg-blue-400/15 dark:text-blue-200",
-  "bg-emerald-500/12 text-emerald-700 dark:bg-emerald-400/15 dark:text-emerald-200",
-  "bg-amber-500/12 text-amber-800 dark:bg-amber-400/15 dark:text-amber-200",
-  "bg-violet-500/12 text-violet-700 dark:bg-violet-400/15 dark:text-violet-200",
-  "bg-rose-500/12 text-rose-700 dark:bg-rose-400/15 dark:text-rose-200",
-  "bg-cyan-500/12 text-cyan-800 dark:bg-cyan-400/15 dark:text-cyan-200",
-] as const;
-
-function vendorAvatarPresentation(displayName: string, vendorId: string): { initials: string; toneClass: string } {
-  const cleaned = displayName.replace(/^VD\s+/i, "").trim();
-  const parts = (cleaned || displayName).split(/\s+/).filter(Boolean);
-  const first = parts[0]?.[0] ?? "";
-  const last = parts.length > 1 ? (parts[parts.length - 1]?.[0] ?? "") : (parts[0]?.[1] ?? "");
-  const initials = (first + last).toUpperCase() || "VD";
-  let hash = 0;
-  for (let i = 0; i < vendorId.length; i += 1) {
-    hash = (hash * 31 + vendorId.charCodeAt(i)) >>> 0;
-  }
-  return {
-    initials,
-    toneClass: VENDOR_AVATAR_TONES[hash % VENDOR_AVATAR_TONES.length],
-  };
-}
-
 export function VendorFinanceListView({
   initialCanRecord = false,
   initialCanReconcile = false,
@@ -669,7 +644,7 @@ export function VendorFinanceListView({
                 placeholder="Nhập tên Vendor cần tra cứu…"
                 value={searchInput}
                 onChange={(e) => setSearchInput(e.target.value)}
-                className="min-h-11 sm:min-h-9 w-full rounded-lg border border-border/80 bg-surface-muted/45 pl-9 pr-3 py-1.5 text-sm text-foreground hover:border-border focus:bg-surface focus:border-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40"
+                className="min-h-11 sm:min-h-9 w-full rounded-lg border border-border bg-surface pl-9 pr-3 py-1.5 text-sm text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40"
               />
             </div>
           </div>
@@ -683,7 +658,7 @@ export function VendorFinanceListView({
             value={projectFilter}
             containerClassName="relative space-y-1"
             labelClassName="block text-xs sm:text-sm font-semibold text-foreground"
-            inputClassName="min-h-11 sm:min-h-9 w-full rounded-lg border border-border/80 bg-surface-muted/45 px-3 py-1.5 text-sm text-foreground hover:border-border focus:bg-surface focus:border-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40"
+            inputClassName="min-h-11 sm:min-h-9 w-full rounded-lg border border-border bg-surface px-3 py-1.5 text-sm text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40"
             onChange={(nextValue) => {
               setProjectFilter(nextValue);
               setPage(1);
@@ -704,7 +679,7 @@ export function VendorFinanceListView({
                 setAccountantFilter(e.target.value);
                 setPage(1);
               }}
-              className="min-h-11 sm:min-h-9 w-full rounded-lg border border-border/80 bg-surface-muted/45 px-3 py-1.5 text-sm text-foreground hover:border-border focus:bg-surface focus:border-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40"
+              className="min-h-11 sm:min-h-9 w-full rounded-lg border border-border bg-surface px-3 py-1.5 text-sm text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40"
             >
               <option value="">Tất cả kế toán trong phạm vi</option>
               {(contextData?.accountants ?? []).map((acc) => (
@@ -730,7 +705,7 @@ export function VendorFinanceListView({
                 setContractTypeFilter(e.target.value as VendorFinanceContractTypeFilter);
                 setPage(1);
               }}
-              className="min-h-11 sm:min-h-9 w-full rounded-lg border border-border/80 bg-surface-muted/45 px-3 py-1.5 text-sm text-foreground hover:border-border focus:bg-surface focus:border-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40"
+              className="min-h-11 sm:min-h-9 w-full rounded-lg border border-border bg-surface px-3 py-1.5 text-sm text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40"
             >
               {VFIN_UI_CONTRACT_TYPE_FILTERS.map((opt) => (
                 <option key={opt} value={opt}>
@@ -754,7 +729,7 @@ export function VendorFinanceListView({
                 setBalanceFilter(e.target.value as VendorFinanceBalanceFilter);
                 setPage(1);
               }}
-              className="min-h-11 sm:min-h-9 w-full rounded-lg border border-border/80 bg-surface-muted/45 px-3 py-1.5 text-sm text-foreground hover:border-border focus:bg-surface focus:border-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40"
+              className="min-h-11 sm:min-h-9 w-full rounded-lg border border-border bg-surface px-3 py-1.5 text-sm text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40"
             >
               {VFIN_UI_BALANCE_FILTERS.map((opt) => (
                 <option key={opt} value={opt}>
@@ -778,7 +753,7 @@ export function VendorFinanceListView({
                 setActiveFilter(e.target.value as VendorFinanceActiveFilter);
                 setPage(1);
               }}
-              className="min-h-11 sm:min-h-9 w-full rounded-lg border border-border/80 bg-surface-muted/45 px-3 py-1.5 text-sm text-foreground hover:border-border focus:bg-surface focus:border-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40"
+              className="min-h-11 sm:min-h-9 w-full rounded-lg border border-border bg-surface px-3 py-1.5 text-sm text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40"
             >
               {VFIN_UI_ACTIVE_FILTERS.map((opt) => (
                 <option key={opt} value={opt}>
@@ -918,39 +893,29 @@ export function VendorFinanceListView({
                 const detailHref = defaultSub
                   ? buildSubLedgerHref(vendor.vendor_id, defaultSub)
                   : `/finance/vendors/${encodeURIComponent(vendor.vendor_id)}`;
-                const avatar = vendorAvatarPresentation(vendor.display_name, vendor.vendor_id);
 
                 return (
                   <tr key={vendor.vendor_id} className={DATA_TABLE_ROW_CLASS}>
                     <td
                       data-card-header="true"
-                      className={`${LIST_TD_CLASS} md:w-[12rem] md:max-w-[12rem] whitespace-normal break-words`}
+                      className={`${LIST_TD_CLASS} md:w-[10.5rem] md:max-w-[10.5rem] whitespace-normal break-words`}
                     >
-                      <div className="flex items-start gap-2.5">
-                        <span
-                          aria-hidden="true"
-                          className={`mt-0.5 inline-flex size-8 shrink-0 items-center justify-center rounded-lg text-xs font-semibold tracking-tight ${avatar.toneClass}`}
-                        >
-                          {avatar.initials}
-                        </span>
-                        <div className="min-w-0 space-y-1">
-                          <div className="flex flex-wrap items-center gap-1.5">
-                            <Link
-                              href={detailHref}
-                              className="font-semibold text-foreground hover:text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40 rounded break-words"
-                            >
-                              {vendor.display_name}
-                            </Link>
-                            <StatusBadge
-                              tone={vendor.active ? "success" : "neutral"}
-                              dot
-                              className="shrink-0 whitespace-nowrap"
-                            >
-                              {vendor.active ? "Đang hoạt động" : "Ngừng HĐ"}
-                            </StatusBadge>
-                          </div>
-                          <p className="font-mono text-xs text-muted break-all">{vendor.vendor_id}</p>
+                      <div className="space-y-1">
+                        <div className="flex flex-wrap items-center gap-1.5">
+                          <Link
+                            href={detailHref}
+                            className="font-semibold text-foreground hover:text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40 rounded break-words"
+                          >
+                            {vendor.display_name}
+                          </Link>
+                          <StatusBadge
+                            tone={vendor.active ? "success" : "neutral"}
+                            className="shrink-0 whitespace-nowrap"
+                          >
+                            {vendor.active ? "Đang hoạt động" : "Ngừng HĐ"}
+                          </StatusBadge>
                         </div>
+                        <p className="font-mono text-xs text-muted break-all">{vendor.vendor_id}</p>
                       </div>
                     </td>
 
@@ -961,7 +926,7 @@ export function VendorFinanceListView({
                       {vendor.sub_ledgers.length === 0 ? (
                         <span className="text-xs text-muted">Chưa liên kết sổ dự án</span>
                       ) : (
-                        <div className="w-full divide-y divide-border/50" data-testid="vfin-vendor-subledger-list">
+                        <div className="w-full space-y-1.5" data-testid="vfin-vendor-subledger-list">
                           {vendor.sub_ledgers.map((sub, idx) => {
                             const subBal = formatVendorBalancePresentation({
                               current_balance_minor: sub.current_balance_minor,
@@ -974,7 +939,7 @@ export function VendorFinanceListView({
                               <Link
                                 key={subKey}
                                 href={buildSubLedgerHref(vendor.vendor_id, sub)}
-                                className="flex flex-wrap items-center justify-between gap-2 rounded-md px-2 py-1.5 -mx-1 text-xs transition-colors hover:bg-surface-muted/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40"
+                                className="flex flex-wrap items-center justify-between gap-2 rounded-lg border border-border bg-surface-muted/40 px-2.5 py-1.5 text-xs transition-all duration-150 hover:border-primary/50 hover:bg-surface hover:shadow-2xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40"
                               >
                                 <span className="flex min-w-0 flex-1 flex-wrap items-center gap-1.5 leading-snug">
                                   <StatusBadge
@@ -999,11 +964,9 @@ export function VendorFinanceListView({
                                     </span>
                                   )}
                                 </span>
-                                {vendor.sub_ledgers.length > 1 ? (
-                                  <span className="shrink-0 whitespace-nowrap font-mono font-semibold tabular-nums text-foreground">
-                                    {subBal.signedText}
-                                  </span>
-                                ) : null}
+                                <span className="shrink-0 whitespace-nowrap font-mono font-semibold tabular-nums text-foreground">
+                                  {subBal.signedText}
+                                </span>
                               </Link>
                             );
                           })}
@@ -1091,15 +1054,19 @@ export function VendorFinanceListView({
                       </div>
                     </td>
 
-                    <td data-card-actions="true" className={`${LIST_TD_CLASS} text-right whitespace-nowrap`}>
+                    <td data-card-actions="true" className={`${LIST_TD_CLASS} text-right`}>
                       <RowActionCluster>
                         <Link
                           href={detailHref}
                           aria-label={`Xem sổ cái của ${vendor.display_name}`}
-                          className={`${buttonClasses({ variant: "secondary", size: "sm" })} whitespace-nowrap`}
+                          className={`${buttonClasses({ variant: "secondary", size: "sm" })} md:!h-auto md:!min-h-8 md:!px-2.5 md:!py-1.5 md:!text-xs !whitespace-normal text-center leading-tight`}
                         >
-                          Sổ cái & Đối soát
-                          <ArrowRight className="h-3.5 w-3.5" aria-hidden />
+                          <span className="inline-block text-center leading-tight">
+                            Sổ cái
+                            <br />
+                            &amp; Đối soát
+                          </span>
+                          <ArrowRight className="h-3.5 w-3.5 shrink-0" aria-hidden />
                         </Link>
                       </RowActionCluster>
                     </td>

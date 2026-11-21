@@ -14,6 +14,7 @@ export function PageShell({
   return (
     <div
       data-testid={dataTestId}
+      data-ui-panel-motion="true"
       className={cn(
         "mx-auto flex w-full max-w-7xl flex-col gap-4 px-3.5 py-4 pb-[max(1.25rem,env(safe-area-inset-bottom))] sm:gap-5 sm:px-6 sm:py-6 lg:px-8 overflow-x-clip",
         className,
