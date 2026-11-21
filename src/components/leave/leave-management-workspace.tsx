@@ -45,6 +45,7 @@ import {
   fetchAllLeaveAdminEmployeeOptions,
   formatHalfDayUnits,
   formatIsoDateVi,
+  formatIsoDayOfMonthVi,
   formatLeaveAdminAccountOptionLabel,
   formatSignedHalfDayUnits,
   halfDayUnitsToDays,
@@ -3855,9 +3856,10 @@ export function LeaveManagementWorkspace({
                               {attendanceDates.map((isoDate) => (
                                 <span
                                   key={isoDate}
-                                  className="inline-flex rounded border border-border bg-surface-muted px-1.5 py-0.5 text-[11px] font-mono"
+                                  title={formatIsoDateVi(isoDate)}
+                                  className="inline-flex min-w-6 items-center justify-center rounded border border-border bg-surface-muted px-1.5 py-0.5 text-[11px] font-mono"
                                 >
-                                  {formatIsoDateVi(isoDate)}
+                                  {formatIsoDayOfMonthVi(isoDate)}
                                 </span>
                               ))}
                             </div>
