@@ -4,11 +4,11 @@
    Script trong <head> ghi đè các biến này trước paint (không flash, không hydration mismatch). */
 :root {
   color-scheme: light;
-  --background: #eef2fb;
-  --foreground: #091e5a;
+  --background: #f6f8fc;
+  --foreground: #0f172a;
   --surface: #ffffff;
-  --muted: #4a5578;
-  --border: #d4dcf0;
+  --muted: #526077;
+  --border: #e2e8f0;
   --primary: #0738cd;
   --secondary: #042280;
   --accent: #ff0065;
@@ -32,23 +32,23 @@
   /* R2.2 Modern Soft Enterprise & Editorial Royal Navy — Theme-derived surface & elevation tokens.
      Tự động thích ứng với cả 5 theme (hr-partner, ocean-trust, emerald-growth,
      violet-future, executive-gold) mà không ghi đè inline vars của ThemeProvider. */
-  --surface-muted: color-mix(in srgb, var(--surface) 52%, var(--background) 48%);
-  --surface-elevated: color-mix(in srgb, var(--surface) 94%, #ffffff 6%);
-  --surface-hover: color-mix(in srgb, var(--primary) 7%, var(--surface) 93%);
-  --primary-soft: color-mix(in srgb, var(--primary) 11%, transparent);
-  --primary-soft-border: color-mix(in srgb, var(--primary) 26%, transparent);
+  --surface-muted: color-mix(in srgb, var(--surface) 60%, var(--background) 40%);
+  --surface-elevated: color-mix(in srgb, var(--surface) 96%, #ffffff 4%);
+  --surface-hover: color-mix(in srgb, var(--primary) 5%, var(--surface) 95%);
+  --primary-soft: color-mix(in srgb, var(--primary) 10%, transparent);
+  --primary-soft-border: color-mix(in srgb, var(--primary) 22%, transparent);
 
   /* Editorial Royal Navy derived tokens */
-  --navy: color-mix(in srgb, var(--secondary) 55%, var(--foreground) 45%);
+  --navy: color-mix(in srgb, var(--secondary) 48%, var(--foreground) 52%);
   --heading-ink: var(--navy);
-  --primary-hover: color-mix(in srgb, var(--primary) 72%, #020617 28%);
-  --selected-bg: color-mix(in srgb, var(--primary) 10%, var(--surface) 90%);
-  --line-strong: color-mix(in srgb, var(--border) 62%, var(--primary) 38%);
-  --shadow-header: 0 4px 18px color-mix(in srgb, var(--primary) 8%, transparent);
-  --shadow-card: 0 8px 20px color-mix(in srgb, var(--primary) 8%, transparent), 0 2px 4px color-mix(in srgb, var(--primary) 4%, transparent);
-  --shadow-card-hover: 0 16px 32px color-mix(in srgb, var(--primary) 14%, transparent), 0 4px 10px color-mix(in srgb, var(--primary) 6%, transparent);
-  --shadow-dialog: 0 28px 100px color-mix(in srgb, var(--primary) 26%, rgba(4, 18, 66, 0.32));
-  --backdrop: color-mix(in srgb, var(--navy) 62%, rgba(2, 6, 23, 0.48));
+  --primary-hover: color-mix(in srgb, var(--primary) 78%, #020617 22%);
+  --selected-bg: color-mix(in srgb, var(--primary) 7%, var(--surface) 93%);
+  --line-strong: color-mix(in srgb, var(--border) 68%, var(--primary) 32%);
+  --shadow-header: 0 1px 3px rgba(15, 23, 42, 0.03), 0 4px 12px color-mix(in srgb, var(--primary) 4%, transparent);
+  --shadow-card: 0 1px 2px rgba(15, 23, 42, 0.03), 0 6px 16px -4px color-mix(in srgb, var(--primary) 6%, rgba(15, 23, 42, 0.04));
+  --shadow-card-hover: 0 10px 24px -6px color-mix(in srgb, var(--primary) 12%, rgba(15, 23, 42, 0.08)), 0 2px 6px rgba(15, 23, 42, 0.04);
+  --shadow-dialog: 0 28px 90px color-mix(in srgb, var(--primary) 22%, rgba(4, 18, 66, 0.28));
+  --backdrop: color-mix(in srgb, var(--navy) 56%, rgba(2, 6, 23, 0.44));
 
   /* UIUX Chặng 1 & 2 — Motion tokens */
   --ui-motion-fast: 120ms;

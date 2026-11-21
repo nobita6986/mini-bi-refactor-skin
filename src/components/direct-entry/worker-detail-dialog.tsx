@@ -163,9 +163,7 @@ export function WorkerDetailDialog({
               </Dialog.Close>
             </div>
             <Dialog.Description id="worker-detail-description" className={styles.drawerDescription}>
-              Mã do máy chủ cấp: <strong>{row.employee_code}</strong>. Mọi nhóm dữ liệu bên dưới
-              {" "}chỉ hiển thị theo quyền và phạm vi máy chủ xác nhận; khóa lưu trữ và liên kết
-              {" "}ký dài hạn không bao giờ hiển thị trên UI hay log.
+              Mã người lao động: <strong>{row.employee_code}</strong>
             </Dialog.Description>
             <WorkerDetailBody key={row.entry_id} row={row} />
             <div className={styles.drawerActions}>

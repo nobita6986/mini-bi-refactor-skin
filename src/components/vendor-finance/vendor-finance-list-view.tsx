@@ -5,11 +5,16 @@ import Link from "next/link";
 import {
   ArrowRight,
   BarChart3,
+  Building2,
   Download,
   FileSpreadsheet,
+  Layers,
+  Receipt,
   RefreshCw,
+  Scale,
   Search,
   Settings2,
+  Wallet,
   X,
 } from "lucide-react";
 
@@ -84,6 +89,31 @@ function buildSubLedgerHref(vendorId: string, sub: VendorFinanceListSubLedgerIte
 
 const LIST_TH_CLASS = `${DATA_TABLE_TH_CLASS} !px-2 !py-2.5 text-[11px] leading-tight align-middle`;
 const LIST_TD_CLASS = `${DATA_TABLE_TD_CLASS} !px-2 !py-2.5 align-middle`;
+
+const VENDOR_AVATAR_TONES = [
+  "bg-blue-500/12 text-blue-700 dark:bg-blue-400/15 dark:text-blue-200",
+  "bg-emerald-500/12 text-emerald-700 dark:bg-emerald-400/15 dark:text-emerald-200",
+  "bg-amber-500/12 text-amber-800 dark:bg-amber-400/15 dark:text-amber-200",
+  "bg-violet-500/12 text-violet-700 dark:bg-violet-400/15 dark:text-violet-200",
+  "bg-rose-500/12 text-rose-700 dark:bg-rose-400/15 dark:text-rose-200",
+  "bg-cyan-500/12 text-cyan-800 dark:bg-cyan-400/15 dark:text-cyan-200",
+] as const;
+
+function vendorAvatarPresentation(displayName: string, vendorId: string): { initials: string; toneClass: string } {
+  const cleaned = displayName.replace(/^VD\s+/i, "").trim();
+  const parts = (cleaned || displayName).split(/\s+/).filter(Boolean);
+  const first = parts[0]?.[0] ?? "";
+  const last = parts.length > 1 ? (parts[parts.length - 1]?.[0] ?? "") : (parts[0]?.[1] ?? "");
+  const initials = (first + last).toUpperCase() || "VD";
+  let hash = 0;
+  for (let i = 0; i < vendorId.length; i += 1) {
+    hash = (hash * 31 + vendorId.charCodeAt(i)) >>> 0;
+  }
+  return {
+    initials,
+    toneClass: VENDOR_AVATAR_TONES[hash % VENDOR_AVATAR_TONES.length],
+  };
+}
 
 export function VendorFinanceListView({
   initialCanRecord = false,
@@ -453,78 +483,128 @@ export function VendorFinanceListView({
         className={`grid grid-cols-1 gap-3 sm:grid-cols-2 ${canViewSharedAdvance ? "xl:grid-cols-5" : "xl:grid-cols-4"}`}
         data-testid="vfin-company-kpis"
       >
-        <Card className="p-4">
-          <p className="text-xs font-medium text-muted">Tổng phải trả (cộng các sổ dương)</p>
+        <Card className="relative overflow-hidden p-4 border-border/80 transition-transform duration-150 hover:-translate-y-[1px]">
+          <div className="absolute inset-x-0 top-0 h-[2px] bg-amber-500/85" aria-hidden />
+          <div className="flex items-start justify-between gap-2">
+            <p className="text-xs font-medium text-muted">Tổng phải trả Vendor</p>
+            <span className="inline-flex size-7 shrink-0 items-center justify-center rounded-lg bg-amber-500/12 text-amber-700 dark:text-amber-300" aria-hidden>
+              <Receipt className="h-3.5 w-3.5" />
+            </span>
+          </div>
           <p
             data-testid="vfin-kpi-payable"
-            className="mt-1.5 whitespace-nowrap font-mono text-xl font-semibold tabular-nums text-foreground"
+            className="mt-1.5 whitespace-nowrap font-mono text-xl font-semibold tabular-nums text-[var(--navy)]"
           >
             {summary ? formatVndMinor(summary.total_payable_minor) : "—"}
           </p>
-          <p className="mt-1 text-xs text-muted">
+          {summary && summary.total_vendor_count > 0 ? (
+            <div className="mt-2 h-1 w-full overflow-hidden rounded-full bg-amber-500/15" aria-hidden>
+              <div
+                className="h-full rounded-full bg-amber-500/80"
+                style={{
+                  width: `${Math.min(100, Math.round((summary.vendors_with_payable_count / summary.total_vendor_count) * 100))}%`,
+                }}
+              />
+            </div>
+          ) : null}
+          <p className="mt-1.5 text-xs text-muted">
             {summary
-              ? `${summary.vendors_with_payable_count} Vendor có sổ đang phải trả (không bù trừ chéo)`
+              ? `${summary.vendors_with_payable_count} Vendor có sổ phải trả`
               : "Đang tải dữ liệu…"}
           </p>
         </Card>
 
         {canViewSharedAdvance ? (
-          <Card className="p-4 border-primary/30 bg-primary/5">
-            <p className="text-xs font-medium text-muted">Số dư ứng dùng chung</p>
+          <Card className="relative overflow-hidden p-4 border-primary/25 bg-primary/[0.03] transition-transform duration-150 hover:-translate-y-[1px]">
+            <div className="absolute inset-x-0 top-0 h-[2px] bg-primary" aria-hidden />
+            <div className="flex items-start justify-between gap-2">
+              <p className="text-xs font-medium text-muted">Số dư ứng dùng chung</p>
+              <span className="inline-flex size-7 shrink-0 items-center justify-center rounded-lg bg-primary/12 text-primary" aria-hidden>
+                <Wallet className="h-3.5 w-3.5" />
+              </span>
+            </div>
             <p
               data-testid="vfin-kpi-shared-advance"
               className="mt-1.5 whitespace-nowrap font-mono text-xl font-semibold tabular-nums text-primary"
             >
               {summary ? formatVndMinor(summary.total_shared_advance_minor ?? "0") : "—"}
             </p>
-            <p className="mt-1 text-xs text-muted">
-              Tổng số dư ứng cấp Vendor (tách biệt với công nợ sổ dự án)
+            <p className="mt-1.5 text-xs text-muted">
+              Quỹ tạm ứng cấp Vendor (khấu trừ khi thanh toán)
             </p>
           </Card>
         ) : null}
 
-        <Card className="p-4">
-          <p className="text-xs font-medium text-muted">Tổng dư ứng (cộng các sổ âm)</p>
+        <Card className="relative overflow-hidden p-4 border-border/80 transition-transform duration-150 hover:-translate-y-[1px]">
+          <div className="absolute inset-x-0 top-0 h-[2px] bg-sky-500/85" aria-hidden />
+          <div className="flex items-start justify-between gap-2">
+            <p className="text-xs font-medium text-muted">Tổng dư ứng theo sổ</p>
+            <span className="inline-flex size-7 shrink-0 items-center justify-center rounded-lg bg-sky-500/12 text-sky-700 dark:text-sky-300" aria-hidden>
+              <Layers className="h-3.5 w-3.5" />
+            </span>
+          </div>
           <p
             data-testid="vfin-kpi-advance"
-            className="mt-1.5 whitespace-nowrap font-mono text-xl font-semibold tabular-nums text-foreground"
+            className="mt-1.5 whitespace-nowrap font-mono text-xl font-semibold tabular-nums text-[var(--navy)]"
           >
             {summary ? formatVndMinor(summary.total_advance_minor) : "—"}
           </p>
-          <p className="mt-1 text-xs text-muted">
+          <p className="mt-1.5 text-xs text-muted">
             {summary
-              ? `${summary.vendors_with_advance_count} Vendor có sổ đang dư ứng (không bù trừ chéo)`
+              ? `${summary.vendors_with_advance_count} Vendor có sổ đang dư ứng`
               : "Đang tải dữ liệu…"}
           </p>
         </Card>
 
-        <Card className="p-4">
-          <p className="text-xs font-medium text-muted">Số Vendor & Sổ dự án trong phạm vi</p>
+        <Card className="relative overflow-hidden p-4 border-border/80 transition-transform duration-150 hover:-translate-y-[1px]">
+          <div className="absolute inset-x-0 top-0 h-[2px] bg-emerald-500/85" aria-hidden />
+          <div className="flex items-start justify-between gap-2">
+            <p className="text-xs font-medium text-muted">Vendor & Sổ dự án</p>
+            <span className="inline-flex size-7 shrink-0 items-center justify-center rounded-lg bg-emerald-500/12 text-emerald-700 dark:text-emerald-300" aria-hidden>
+              <Building2 className="h-3.5 w-3.5" />
+            </span>
+          </div>
           <p
             data-testid="vfin-kpi-nonzero-count"
-            className="mt-1.5 whitespace-nowrap font-mono text-xl font-semibold tabular-nums text-foreground"
+            className="mt-1.5 whitespace-nowrap font-mono text-xl font-semibold tabular-nums text-[var(--navy)]"
           >
             {summary
               ? `${summary.vendors_with_nonzero_balance_count} / ${summary.total_vendor_count}`
               : "—"}
           </p>
-          <p className="mt-1 text-xs text-muted">
+          {summary && summary.total_vendor_count > 0 ? (
+            <div className="mt-2 h-1 w-full overflow-hidden rounded-full bg-emerald-500/15" aria-hidden>
+              <div
+                className="h-full rounded-full bg-emerald-500/80"
+                style={{
+                  width: `${Math.min(100, Math.round((summary.vendors_with_nonzero_balance_count / summary.total_vendor_count) * 100))}%`,
+                }}
+              />
+            </div>
+          ) : null}
+          <p className="mt-1.5 text-xs text-muted">
             {summary
-              ? `${summary.sub_ledger_count} sổ chi tiết · ${summary.uninitialized_vendor_count} sổ chưa mở đầu kỳ`
+              ? `${summary.sub_ledger_count} sổ chi tiết · ${summary.uninitialized_vendor_count} chưa mở đầu kỳ`
               : "Đang tải dữ liệu…"}
           </p>
         </Card>
 
-        <Card className="p-4">
-          <p className="text-xs font-medium text-muted">Tổng tham khảo phạm vi lọc</p>
+        <Card className="relative overflow-hidden p-4 border-border/80 transition-transform duration-150 hover:-translate-y-[1px]">
+          <div className="absolute inset-x-0 top-0 h-[2px] bg-violet-500/85" aria-hidden />
+          <div className="flex items-start justify-between gap-2">
+            <p className="text-xs font-medium text-muted">Tổng tham khảo phạm vi lọc</p>
+            <span className="inline-flex size-7 shrink-0 items-center justify-center rounded-lg bg-violet-500/12 text-violet-700 dark:text-violet-300" aria-hidden>
+              <Scale className="h-3.5 w-3.5" />
+            </span>
+          </div>
           <p
             data-testid="vfin-kpi-net"
-            className="mt-1.5 whitespace-nowrap font-mono text-xl font-semibold tabular-nums text-foreground"
+            className="mt-1.5 whitespace-nowrap font-mono text-xl font-semibold tabular-nums text-[var(--navy)]"
           >
             {summary ? formatSignedVndDelta(summary.net_balance_minor) : "—"}
           </p>
-          <p className="mt-1 text-xs text-muted">
-            Tổng tham khảo — không thay thế số dư riêng từng sổ kế toán / dự án / loại hợp đồng
+          <p className="mt-1.5 text-xs text-muted">
+            Tổng tham khảo các sổ trong phạm vi đang lọc
           </p>
         </Card>
       </section>
@@ -569,8 +649,8 @@ export function VendorFinanceListView({
           ) : null
         }
       >
-        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          <div className="space-y-1.5">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-6">
+          <div className="space-y-1">
             <label
               htmlFor={searchInputId}
               className="block text-xs sm:text-sm font-semibold text-foreground"
@@ -589,7 +669,7 @@ export function VendorFinanceListView({
                 placeholder="Nhập tên Vendor cần tra cứu…"
                 value={searchInput}
                 onChange={(e) => setSearchInput(e.target.value)}
-                className="min-h-11 sm:min-h-10 w-full rounded-lg border border-border bg-surface pl-9 pr-3 py-2 text-sm text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40"
+                className="min-h-11 sm:min-h-9 w-full rounded-lg border border-border/80 bg-surface-muted/45 pl-9 pr-3 py-1.5 text-sm text-foreground hover:border-border focus:bg-surface focus:border-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40"
               />
             </div>
           </div>
@@ -601,16 +681,16 @@ export function VendorFinanceListView({
             placeholder="Gõ tên hoặc mã dự án"
             options={projectFilterOptions}
             value={projectFilter}
-            containerClassName="relative space-y-1.5"
+            containerClassName="relative space-y-1"
             labelClassName="block text-xs sm:text-sm font-semibold text-foreground"
-            inputClassName="min-h-11 sm:min-h-10 w-full rounded-lg border border-border bg-surface px-3 py-2 text-sm text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40"
+            inputClassName="min-h-11 sm:min-h-9 w-full rounded-lg border border-border/80 bg-surface-muted/45 px-3 py-1.5 text-sm text-foreground hover:border-border focus:bg-surface focus:border-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40"
             onChange={(nextValue) => {
               setProjectFilter(nextValue);
               setPage(1);
             }}
           />
 
-          <div className="space-y-1.5">
+          <div className="space-y-1">
             <label
               htmlFor={accountantSelectId}
               className="block text-xs sm:text-sm font-semibold text-foreground"
@@ -624,7 +704,7 @@ export function VendorFinanceListView({
                 setAccountantFilter(e.target.value);
                 setPage(1);
               }}
-              className="min-h-11 sm:min-h-10 w-full rounded-lg border border-border bg-surface px-3 py-2 text-sm text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40"
+              className="min-h-11 sm:min-h-9 w-full rounded-lg border border-border/80 bg-surface-muted/45 px-3 py-1.5 text-sm text-foreground hover:border-border focus:bg-surface focus:border-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40"
             >
               <option value="">Tất cả kế toán trong phạm vi</option>
               {(contextData?.accountants ?? []).map((acc) => (
@@ -635,7 +715,7 @@ export function VendorFinanceListView({
             </select>
           </div>
 
-          <div className="space-y-1.5">
+          <div className="space-y-1">
             <label
               htmlFor={contractTypeSelectId}
               className="block text-xs sm:text-sm font-semibold text-foreground"
@@ -650,7 +730,7 @@ export function VendorFinanceListView({
                 setContractTypeFilter(e.target.value as VendorFinanceContractTypeFilter);
                 setPage(1);
               }}
-              className="min-h-11 sm:min-h-10 w-full rounded-lg border border-border bg-surface px-3 py-2 text-sm text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40"
+              className="min-h-11 sm:min-h-9 w-full rounded-lg border border-border/80 bg-surface-muted/45 px-3 py-1.5 text-sm text-foreground hover:border-border focus:bg-surface focus:border-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40"
             >
               {VFIN_UI_CONTRACT_TYPE_FILTERS.map((opt) => (
                 <option key={opt} value={opt}>
@@ -660,7 +740,7 @@ export function VendorFinanceListView({
             </select>
           </div>
 
-          <div className="space-y-1.5">
+          <div className="space-y-1">
             <label
               htmlFor={balanceSelectId}
               className="block text-xs sm:text-sm font-semibold text-foreground"
@@ -674,7 +754,7 @@ export function VendorFinanceListView({
                 setBalanceFilter(e.target.value as VendorFinanceBalanceFilter);
                 setPage(1);
               }}
-              className="min-h-11 sm:min-h-10 w-full rounded-lg border border-border bg-surface px-3 py-2 text-sm text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40"
+              className="min-h-11 sm:min-h-9 w-full rounded-lg border border-border/80 bg-surface-muted/45 px-3 py-1.5 text-sm text-foreground hover:border-border focus:bg-surface focus:border-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40"
             >
               {VFIN_UI_BALANCE_FILTERS.map((opt) => (
                 <option key={opt} value={opt}>
@@ -684,7 +764,7 @@ export function VendorFinanceListView({
             </select>
           </div>
 
-          <div className="space-y-1.5">
+          <div className="space-y-1">
             <label
               htmlFor={activeSelectId}
               className="block text-xs sm:text-sm font-semibold text-foreground"
@@ -698,7 +778,7 @@ export function VendorFinanceListView({
                 setActiveFilter(e.target.value as VendorFinanceActiveFilter);
                 setPage(1);
               }}
-              className="min-h-11 sm:min-h-10 w-full rounded-lg border border-border bg-surface px-3 py-2 text-sm text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40"
+              className="min-h-11 sm:min-h-9 w-full rounded-lg border border-border/80 bg-surface-muted/45 px-3 py-1.5 text-sm text-foreground hover:border-border focus:bg-surface focus:border-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40"
             >
               {VFIN_UI_ACTIVE_FILTERS.map((opt) => (
                 <option key={opt} value={opt}>
@@ -838,29 +918,39 @@ export function VendorFinanceListView({
                 const detailHref = defaultSub
                   ? buildSubLedgerHref(vendor.vendor_id, defaultSub)
                   : `/finance/vendors/${encodeURIComponent(vendor.vendor_id)}`;
+                const avatar = vendorAvatarPresentation(vendor.display_name, vendor.vendor_id);
 
                 return (
                   <tr key={vendor.vendor_id} className={DATA_TABLE_ROW_CLASS}>
                     <td
                       data-card-header="true"
-                      className={`${LIST_TD_CLASS} md:w-[10.5rem] md:max-w-[10.5rem] whitespace-normal break-words`}
+                      className={`${LIST_TD_CLASS} md:w-[12rem] md:max-w-[12rem] whitespace-normal break-words`}
                     >
-                      <div className="space-y-1">
-                        <div className="flex flex-wrap items-center gap-1.5">
-                          <Link
-                            href={detailHref}
-                            className="font-semibold text-foreground hover:text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40 rounded break-words"
-                          >
-                            {vendor.display_name}
-                          </Link>
-                          <StatusBadge
-                            tone={vendor.active ? "success" : "neutral"}
-                            className="shrink-0 whitespace-nowrap"
-                          >
-                            {vendor.active ? "Đang hoạt động" : "Ngừng HĐ"}
-                          </StatusBadge>
+                      <div className="flex items-start gap-2.5">
+                        <span
+                          aria-hidden="true"
+                          className={`mt-0.5 inline-flex size-8 shrink-0 items-center justify-center rounded-lg text-xs font-semibold tracking-tight ${avatar.toneClass}`}
+                        >
+                          {avatar.initials}
+                        </span>
+                        <div className="min-w-0 space-y-1">
+                          <div className="flex flex-wrap items-center gap-1.5">
+                            <Link
+                              href={detailHref}
+                              className="font-semibold text-foreground hover:text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40 rounded break-words"
+                            >
+                              {vendor.display_name}
+                            </Link>
+                            <StatusBadge
+                              tone={vendor.active ? "success" : "neutral"}
+                              dot
+                              className="shrink-0 whitespace-nowrap"
+                            >
+                              {vendor.active ? "Đang hoạt động" : "Ngừng HĐ"}
+                            </StatusBadge>
+                          </div>
+                          <p className="font-mono text-xs text-muted break-all">{vendor.vendor_id}</p>
                         </div>
-                        <p className="font-mono text-xs text-muted break-all">{vendor.vendor_id}</p>
                       </div>
                     </td>
 
@@ -871,7 +961,7 @@ export function VendorFinanceListView({
                       {vendor.sub_ledgers.length === 0 ? (
                         <span className="text-xs text-muted">Chưa liên kết sổ dự án</span>
                       ) : (
-                        <div className="w-full space-y-1.5" data-testid="vfin-vendor-subledger-list">
+                        <div className="w-full divide-y divide-border/50" data-testid="vfin-vendor-subledger-list">
                           {vendor.sub_ledgers.map((sub, idx) => {
                             const subBal = formatVendorBalancePresentation({
                               current_balance_minor: sub.current_balance_minor,
@@ -884,7 +974,7 @@ export function VendorFinanceListView({
                               <Link
                                 key={subKey}
                                 href={buildSubLedgerHref(vendor.vendor_id, sub)}
-                                className="flex flex-wrap items-center justify-between gap-2 rounded-lg border border-border bg-surface-muted/40 px-2 py-1.5 text-xs hover:border-primary/40 hover:bg-surface-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40"
+                                className="flex flex-wrap items-center justify-between gap-2 rounded-md px-2 py-1.5 -mx-1 text-xs transition-colors hover:bg-surface-muted/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40"
                               >
                                 <span className="flex min-w-0 flex-1 flex-wrap items-center gap-1.5 leading-snug">
                                   <StatusBadge
@@ -909,9 +999,11 @@ export function VendorFinanceListView({
                                     </span>
                                   )}
                                 </span>
-                                <span className="shrink-0 whitespace-nowrap font-mono font-semibold tabular-nums text-foreground">
-                                  {subBal.signedText}
-                                </span>
+                                {vendor.sub_ledgers.length > 1 ? (
+                                  <span className="shrink-0 whitespace-nowrap font-mono font-semibold tabular-nums text-foreground">
+                                    {subBal.signedText}
+                                  </span>
+                                ) : null}
                               </Link>
                             );
                           })}

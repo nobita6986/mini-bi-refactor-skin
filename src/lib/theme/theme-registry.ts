@@ -106,10 +106,10 @@ export function darken(hex: string, amount: number): string {
 // ---------------------------------------------------------------------------
 
 const LIGHT_NEUTRALS: Omit<ThemeTokens, "bg" | "primary" | "secondary" | "accent" | "chart"> = {
-  fg: "#091e5a",
+  fg: "#0f172a",
   surface: "#ffffff",
-  muted: "#4a5578",
-  border: "#d4dcf0",
+  muted: "#526077",
+  border: "#e2e8f0",
   ring: "#0738cd", // placeholder — ghi đè bằng primary bên dưới
   tooltip: "#ffffff",
   onPrimary: "#ffffff",
@@ -151,16 +151,16 @@ function defineTheme(
 }
 
 export const THEMES: ThemeDef[] = [
-  defineTheme("hr-partner", "HR Partner", "#EEF2FB", "#0738CD", "#042280", "#FF0065", [
+  defineTheme("hr-partner", "HR Partner", "#F6F8FC", "#0738CD", "#042280", "#FF0065", [
     "#3745A5", "#0738CD", "#EA580C", "#E11D48", "#059669", "#7C3AED", "#CA8A04", "#475569",
   ]),
-  defineTheme("ocean-trust", "Ocean Trust", "#F0F9FF", "#075985", "#0E7490", "#0F766E", [
+  defineTheme("ocean-trust", "Ocean Trust", "#F4F9FC", "#075985", "#0E7490", "#0F766E", [
     "#0369A1", "#0891B2", "#0F766E", "#2563EB", "#65A30D", "#9333EA", "#D97706", "#475569",
   ]),
-  defineTheme("emerald-growth", "Emerald Growth", "#F0FDF4", "#047857", "#0F766E", "#1D4ED8", [
+  defineTheme("emerald-growth", "Emerald Growth", "#F4FAF7", "#047857", "#0F766E", "#1D4ED8", [
     "#059669", "#0D9488", "#2563EB", "#65A30D", "#7C3AED", "#CA8A04", "#DC2626", "#475569",
   ]),
-  defineTheme("violet-future", "Violet Future", "#FAF5FF", "#6D28D9", "#4F46E5", "#BE185D", [
+  defineTheme("violet-future", "Violet Future", "#F9F7FD", "#6D28D9", "#4F46E5", "#BE185D", [
     "#7C3AED", "#4F46E5", "#C026D3", "#DB2777", "#0891B2", "#059669", "#D97706", "#475569",
   ]),
   defineTheme("executive-gold", "Executive Gold", "#F8FAFC", "#0F172A", "#334155", "#B45309", [

@@ -130,14 +130,23 @@ export function KpiCard({
     <div
       className={
         compact
-          ? "relative flex h-full min-h-28 flex-col overflow-hidden rounded-[10px] border border-border bg-surface p-3 shadow-[var(--shadow-card)] transition-[box-shadow,border-color] duration-[var(--ui-motion-hover,160ms)] hover:border-[var(--line-strong)] hover:shadow-[var(--shadow-card-hover)]"
-          : "relative overflow-hidden rounded-[10px] border border-border bg-surface p-5 shadow-[var(--shadow-card)] transition-[box-shadow,border-color] duration-[var(--ui-motion-hover,160ms)] hover:border-[var(--line-strong)] hover:shadow-[var(--shadow-card-hover)]"
+          ? "group relative flex h-full min-h-28 flex-col overflow-hidden rounded-xl border border-border/80 bg-surface p-3.5 shadow-[var(--shadow-card)] transition-[box-shadow,border-color,transform] duration-[var(--ui-motion-hover,160ms)] hover:-translate-y-[1px] hover:border-[var(--line-strong)] hover:shadow-[var(--shadow-card-hover)]"
+          : "group relative overflow-hidden rounded-xl border border-border/80 bg-surface p-5 shadow-[var(--shadow-card)] transition-[box-shadow,border-color,transform] duration-[var(--ui-motion-hover,160ms)] hover:-translate-y-[1px] hover:border-[var(--line-strong)] hover:shadow-[var(--shadow-card-hover)]"
       }
     >
-      <div className="absolute inset-x-0 top-0 h-1" style={{ background: accent }} aria-hidden />
-      <p className="flex items-center gap-1.5 text-xs font-medium uppercase tracking-wider text-muted">
-        <span className="inline-block h-2 w-2 rounded-full" style={{ background: accent }} aria-hidden />
-        {label}
+      <div className="absolute inset-x-0 top-0 h-[2px] opacity-85" style={{ background: accent }} aria-hidden />
+      <div
+        className="pointer-events-none absolute -right-6 -top-6 h-20 w-20 rounded-full opacity-10 transition-opacity duration-200 group-hover:opacity-20"
+        style={{ background: accent }}
+        aria-hidden
+      />
+      <p className="flex items-center gap-2 text-xs font-medium tracking-wide text-muted">
+        <span
+          className="inline-block h-2 w-2 shrink-0 rounded-full ring-4 ring-primary/10"
+          style={{ background: accent }}
+          aria-hidden
+        />
+        <span className="truncate">{label}</span>
       </p>
       <div
         className={
@@ -148,7 +157,7 @@ export function KpiCard({
       >
         {renderedValue}
       </div>
-      {hint ? <p className={"text-xs text-muted " + (compact ? "mt-auto pt-1" : "mt-1.5")}>{hint}</p> : null}
+      {hint ? <p className={"text-xs text-muted/85 " + (compact ? "mt-auto pt-1" : "mt-1.5")}>{hint}</p> : null}
     </div>
   );
 }
