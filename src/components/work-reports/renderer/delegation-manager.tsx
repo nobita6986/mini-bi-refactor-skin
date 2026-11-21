@@ -214,7 +214,7 @@ export function DelegationManager() {
           data.options.scopes.length > 0 ? (
             <form
               onSubmit={(event) => void create(event)}
-              className="max-w-2xl space-y-4 rounded-xl border border-border p-4 sm:p-6"
+              className="w-full space-y-4 rounded-xl border border-border bg-surface p-4 sm:p-6 shadow-[var(--shadow-card)]"
             >
               <h2 className="font-semibold">Tạo ủy quyền</h2>
               <label className="block space-y-1.5 text-sm font-medium">

@@ -713,7 +713,7 @@ export function AssignmentManager() {
       {error ? <StatusBanner tone="error">{error}</StatusBanner> : null}
 
       {activeSubView === "assignments" && showCreateForm ? (
-        <Card className="max-w-5xl">
+        <Card className="w-full">
           <CardHeader
             title="Tạo đợt giao"
             description="Thiết lập mẫu báo cáo, đối tượng/nhóm nhận, chu kỳ và hạn nộp. Khi đợt giao có hiệu lực trong ngày, hệ thống tự động phát sinh ngay nghĩa vụ kỳ hiện tại cho nhân viên."
