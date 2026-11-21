@@ -3800,7 +3800,7 @@ export function LeaveManagementWorkspace({
                     <th className={COMPACT_TH_CLASS}>Bộ phận / Team</th>
                     <th className={COMPACT_TH_CLASS}>Trạng thái & Mốc làm việc</th>
                     <th className={COMPACT_TH_CLASS}>Chấm công trong tháng</th>
-                    <th className={COMPACT_TH_CLASS}>Chi tiết ngày nghỉ, loại nghỉ & buổi nghỉ</th>
+                    <th className={COMPACT_TH_CLASS}>Chi tiết</th>
                     <th className={COMPACT_TH_CLASS}>Tổng hợp loại nghỉ (Tháng)</th>
                     <th className={COMPACT_TH_CLASS}>Chờ duyệt (Tháng)</th>
                     <th className={COMPACT_TH_CLASS}>Nguồn phép năm (CN / Tháng / TN)</th>
@@ -3869,7 +3869,7 @@ export function LeaveManagementWorkspace({
                         </td>
                         <td
                           className={COMPACT_TD_CLASS}
-                          data-label="Chi tiết ngày nghỉ, loại nghỉ & buổi nghỉ"
+                          data-label="Chi tiết"
                         >
                           {leaveDays.length > 0 ? (
                             <div className="flex max-w-sm flex-wrap gap-1">
@@ -3878,10 +3878,11 @@ export function LeaveManagementWorkspace({
                                 return (
                                   <span
                                     key={`${ld.request_id}-${ld.leave_date}-${ld.session_code}-${idx}`}
-                                    className="inline-flex items-center gap-1 rounded border border-border bg-surface-muted px-1.5 py-0.5 text-[11px] font-mono"
+                                    title={formatIsoDateVi(ld.leave_date)}
+                                    className="inline-flex items-center gap-1 rounded border border-border bg-surface-muted px-1.5 py-0.5 text-[11px] font-mono whitespace-nowrap"
                                   >
                                     <span>
-                                      {formatIsoDateVi(ld.leave_date)} (
+                                      {formatIsoDayOfMonthVi(ld.leave_date)} (
                                       {leaveSessionShortLabel(ld.session_code)})
                                     </span>
                                     <StatusBadge tone={badge.tone}>{badge.label}</StatusBadge>
