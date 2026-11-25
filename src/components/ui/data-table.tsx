@@ -27,7 +27,7 @@ export function DataTableContainer({
     <div
       data-testid={dataTestId}
       className={cn(
-        "relative overflow-hidden rounded-[22px] border border-border/80 bg-surface shadow-[var(--shadow-card)]",
+        "relative overflow-hidden rounded-xl [border-radius:22px] border border-border/80 bg-surface shadow-[var(--shadow-card)]",
         className,
       )}
     >
