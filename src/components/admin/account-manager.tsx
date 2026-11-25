@@ -573,17 +573,21 @@ export function AccountManager({
       <Dialog.Root open={dialog !== null}
         onOpenChange={(open) => { if (!open && !locked) setDialog(null); }}>
         <Dialog.Portal>
-          <Dialog.Overlay className="fixed inset-0 z-40 bg-black/50" />
+          <Dialog.Overlay
+            data-ui-overlay-motion="true"
+            className="fixed inset-0 z-40 bg-[var(--backdrop)] backdrop-blur-[7px]"
+          />
           <Dialog.Content
+            data-ui-dialog-motion="true"
             onEscapeKeyDown={(event) => { if (locked) event.preventDefault(); }}
             onPointerDownOutside={(event) => { if (locked) event.preventDefault(); }}
             onCloseAutoFocus={(event) => { if (locked) event.preventDefault(); }}
-            className="fixed left-1/2 top-1/2 z-50 max-h-[90dvh] w-[min(38rem,calc(100vw-2rem))] -translate-x-1/2 -translate-y-1/2 overflow-y-auto rounded-xl border border-border bg-surface p-5 shadow-xl focus:outline-none sm:p-6"
+            className="fixed left-1/2 top-1/2 z-50 max-h-[90dvh] w-[min(38rem,calc(100vw-2rem))] -translate-x-1/2 -translate-y-1/2 overflow-y-auto rounded-2xl border border-border border-t-2 border-t-primary bg-surface p-5 text-foreground shadow-[var(--shadow-dialog)] focus:outline-none sm:p-6"
             aria-describedby="account-dialog-description"
           >
-            <div className="flex items-start justify-between gap-4">
+            <div className="flex items-start justify-between gap-4 border-b border-border pb-3.5">
               <div>
-                <Dialog.Title className="text-xl font-semibold text-foreground">
+                <Dialog.Title className="text-xl font-semibold tracking-tight text-[var(--navy)]">
                   {dialog?.nextEnabled ? "Kích hoạt tài khoản" : "Ngừng hoạt động tài khoản"}
                 </Dialog.Title>
                 <Dialog.Description id="account-dialog-description" className="mt-1 text-sm text-muted">
@@ -592,7 +596,7 @@ export function AccountManager({
               </div>
               <Dialog.Close asChild>
                 <button type="button" aria-label="Đóng hộp thoại" disabled={locked}
-                  className={button}>×</button>
+                  className="inline-flex min-h-11 min-w-11 sm:min-h-9 sm:min-w-9 shrink-0 items-center justify-center rounded-lg border border-border bg-surface-muted px-3 text-sm font-medium text-[var(--navy)] transition-colors hover:border-primary hover:bg-surface hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40 disabled:cursor-not-allowed disabled:opacity-50">×</button>
               </Dialog.Close>
             </div>
             {pendingIntent?.retry && dialog && pendingIntent.lockId === dialog.account.account_ref ? (
@@ -620,9 +624,16 @@ export function AccountManager({
                 <form onSubmit={submit} className="space-y-4">
                   <ReasonField value={reason} disabled={locked} onChange={(value) => { setReason(value); setFormError(null); }} />
                   {formError ? <p role="alert" className="text-sm text-red-700">{formError}</p> : null}
-                  <button type="submit" disabled={locked} className={primaryButton}>
-                    {busy ? "Đang lưu…" : dialog.nextEnabled ? "Xác nhận kích hoạt" : "Xác nhận ngừng"}
-                  </button>
+                  <div className="flex flex-wrap justify-end gap-2 border-t border-border pt-4">
+                    <Dialog.Close asChild>
+                      <button type="button" disabled={locked} className={button}>
+                        Hủy
+                      </button>
+                    </Dialog.Close>
+                    <button type="submit" disabled={locked} className={primaryButton}>
+                      {busy ? "Đang lưu…" : dialog.nextEnabled ? "Xác nhận kích hoạt" : "Xác nhận ngừng"}
+                    </button>
+                  </div>
                 </form>
               </div>
             ) : null}
@@ -700,7 +711,7 @@ export function AccountManager({
         ) : (
           <>
             <div className="overflow-x-auto rounded-xl border border-border bg-surface shadow-2xs">
-              <table className="r22-card-table w-full min-w-[780px] border-collapse text-left text-sm">
+              <table className="r22-card-table w-full border-collapse text-left text-sm">
                 <caption className="sr-only">Danh sách tài khoản và trạng thái hoạt động</caption>
                 <thead className="border-b border-border bg-surface-muted text-xs uppercase text-muted">
                   <tr>
@@ -1174,15 +1185,19 @@ function AccountOperationDialogs({
   return (
     <Dialog.Root open={operation !== null} onOpenChange={(open) => { if (!open && !isDialogLocked) resetAndClose(); }}>
       <Dialog.Portal>
-        <Dialog.Overlay className="fixed inset-0 z-40 bg-black/50" />
+        <Dialog.Overlay
+          data-ui-overlay-motion="true"
+          className="fixed inset-0 z-40 bg-[var(--backdrop)] backdrop-blur-[7px]"
+        />
         <Dialog.Content
+          data-ui-dialog-motion="true"
           onEscapeKeyDown={(event) => { if (isDialogLocked) event.preventDefault(); }}
           onPointerDownOutside={(event) => { if (isDialogLocked) event.preventDefault(); }}
-          className="fixed left-1/2 top-1/2 z-50 max-h-[90dvh] w-[min(38rem,calc(100vw-2rem))] -translate-x-1/2 -translate-y-1/2 overflow-y-auto rounded-xl border border-border bg-surface p-5 shadow-xl focus:outline-none sm:p-6"
+          className="fixed left-1/2 top-1/2 z-50 max-h-[90dvh] w-[min(38rem,calc(100vw-2rem))] -translate-x-1/2 -translate-y-1/2 overflow-y-auto rounded-2xl border border-border border-t-2 border-t-primary bg-surface p-5 text-foreground shadow-[var(--shadow-dialog)] focus:outline-none sm:p-6"
           aria-describedby="account-op-dialog-description">
-          <div className="flex items-start justify-between gap-4">
+          <div className="flex items-start justify-between gap-4 border-b border-border pb-3.5">
             <div>
-              <Dialog.Title className="text-xl font-semibold text-foreground">
+              <Dialog.Title className="text-xl font-semibold tracking-tight text-[var(--navy)]">
                 {isCreate ? "Tạo tài khoản" : isReset ? "Đặt lại mật khẩu" : "Sửa tên hiển thị"}
               </Dialog.Title>
               <Dialog.Description id="account-op-dialog-description" className="mt-1 text-sm text-muted">
@@ -1192,7 +1207,7 @@ function AccountOperationDialogs({
               </Dialog.Description>
             </div>
             <Dialog.Close asChild>
-              <button type="button" aria-label="Đóng hộp thoại" disabled={isDialogLocked} className={opButton}>×</button>
+              <button type="button" aria-label="Đóng hộp thoại" disabled={isDialogLocked} className="inline-flex min-h-11 min-w-11 sm:min-h-9 sm:min-w-9 shrink-0 items-center justify-center rounded-lg border border-border bg-surface-muted px-3 text-sm font-medium text-[var(--navy)] transition-colors hover:border-primary hover:bg-surface hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40 disabled:cursor-not-allowed disabled:opacity-50">×</button>
             </Dialog.Close>
           </div>
 

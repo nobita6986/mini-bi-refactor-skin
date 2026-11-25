@@ -509,6 +509,14 @@ export function formatIsoDateVi(isoDate: string | null | undefined): string {
   return `${day}/${month}/${year}`;
 }
 
+export function formatIsoDayOfMonthVi(isoDate: string | null | undefined): string {
+  if (typeof isoDate !== "string" || !/^\d{4}-\d{2}-\d{2}$/.test(isoDate.trim())) {
+    return formatIsoDateVi(isoDate);
+  }
+  const [, , day] = isoDate.trim().split("-");
+  return day ?? formatIsoDateVi(isoDate);
+}
+
 export function formatIsoTimestampVi(isoTimestamp: string | null | undefined): string {
   if (typeof isoTimestamp !== "string" || isoTimestamp.trim().length === 0) {
     return "—";
