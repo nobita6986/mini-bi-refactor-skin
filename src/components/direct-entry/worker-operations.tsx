@@ -1258,7 +1258,7 @@ function WorkerTable({
 }) {
   const compactActionClass = " md:!h-7 md:!min-h-7 md:!px-2.5 md:!py-0.5 md:!text-xs justify-center";
   const rowSecondaryBtn = buttonClasses({ variant: "secondary", size: "sm" }) + compactActionClass;
-  const rowPrimaryBtn = buttonClasses({ variant: "primary", size: "sm" }) + compactActionClass;
+  const rowPrimaryBtn = buttonClasses({ variant: "soft", size: "sm" }) + compactActionClass;
   const rowSoftBtn = buttonClasses({ variant: "soft", size: "sm" }) + compactActionClass;
   return (
     <DataTableContainer scrollClassName="overflow-x-auto">
@@ -1289,7 +1289,7 @@ function WorkerTable({
                 : "neutral";
             return (
               <tr key={row.entry_id} className={DATA_TABLE_ROW_CLASS}>
-                <td className={DATA_TABLE_TD_CLASS + " font-semibold"} data-card-header="true">
+                <td className={DATA_TABLE_TD_CLASS + " font-semibold text-[var(--navy)]"} data-card-header="true">
                   <span className="flex items-center gap-2">
                     {quickOffboardingMode ? (
                       <input type="checkbox" className="size-4 shrink-0 accent-primary"
@@ -1304,19 +1304,21 @@ function WorkerTable({
                     <span>{row.display_name}</span>
                   </span>
                 </td>
-                <td className={DATA_TABLE_TD_CLASS + " font-mono text-xs whitespace-nowrap text-muted"} data-label="Mã NLĐ">
-                  {row.employee_code}
+                <td className={DATA_TABLE_TD_CLASS + " whitespace-nowrap"} data-label="Mã NLĐ">
+                  <span className="inline-flex items-center rounded-md border border-border/80 bg-surface-muted/75 px-2 py-0.5 font-mono text-xs font-medium text-[var(--navy)]">
+                    {row.employee_code}
+                  </span>
                 </td>
-                <td className={DATA_TABLE_TD_CLASS} data-label="Dự án">
+                <td className={DATA_TABLE_TD_CLASS + " max-w-[18rem] font-medium text-foreground"} data-label="Dự án">
                   {row.project_display}
                 </td>
-                <td className={DATA_TABLE_TD_CLASS + " font-mono text-xs tabular-nums whitespace-nowrap"} data-label="Ngày đầu tiên">
+                <td className={DATA_TABLE_TD_CLASS + " font-mono text-xs tabular-nums whitespace-nowrap text-muted"} data-label="Ngày đầu tiên">
                   {row.first_work_date}
                 </td>
-                <td className={DATA_TABLE_TD_CLASS} data-label="Người tuyển">
+                <td className={DATA_TABLE_TD_CLASS + " whitespace-nowrap font-medium"} data-label="Người tuyển">
                   {row.recruiter_display}
                 </td>
-                <td className={DATA_TABLE_TD_CLASS} data-label="Trạng thái">
+                <td className={DATA_TABLE_TD_CLASS + " whitespace-nowrap"} data-label="Trạng thái">
                   <StatusBadge tone={statusTone} dot>
                     {workerStatusLabel(row.employment_status)}
                   </StatusBadge>
@@ -1331,8 +1333,8 @@ function WorkerTable({
                 <td className={DATA_TABLE_TD_CLASS} data-label="Loại hình">
                   {row.labor_type_display}
                 </td>
-                <td className={DATA_TABLE_TD_CLASS + " text-right md:w-[7.5rem]"} data-card-actions="true">
-                  <RowActionCluster className="md:flex-col md:items-stretch md:gap-1">
+                <td className={DATA_TABLE_TD_CLASS + " text-right whitespace-nowrap"} data-card-actions="true">
+                  <RowActionCluster>
                     <button type="button" className={rowSecondaryBtn}
                       onClick={(event) => onViewDetail(row, event.currentTarget)}>
                       Xem chi tiết

@@ -519,15 +519,15 @@ h4 {
   box-shadow: 0 6px 16px -6px color-mix(in srgb, var(--primary) 58%, transparent);
 }
 
-/* Halvi De-Boxed Operational Tables (strictly scoped to .r22-card-table & .r22-report-table) */
+/* Halvi Structured Ledger Operational Tables (strictly scoped to .r22-card-table & .r22-report-table) */
 table.r22-card-table > thead > tr > th,
 table.r22-report-table > thead > tr > th {
-  background-color: color-mix(in srgb, var(--surface-muted) 45%, var(--surface));
-  color: var(--muted);
-  font-weight: 600;
+  background-color: color-mix(in srgb, var(--primary) 6%, var(--surface-muted));
+  color: var(--navy);
+  font-weight: 700;
   font-size: 0.75rem;
-  letter-spacing: 0.02em;
-  border-bottom: 1px solid var(--border);
+  letter-spacing: 0.025em;
+  border-bottom: 1.5px solid color-mix(in srgb, var(--border) 72%, var(--primary) 28%);
 }
 
 table.r22-card-table > tbody > tr,
@@ -536,9 +536,17 @@ table.r22-report-table > tbody > tr {
     box-shadow 150ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
+@media (min-width: 768px) {
+  table.r22-card-table > tbody > tr:nth-child(even),
+  table.r22-report-table > tbody > tr:nth-child(even) {
+    background-color: color-mix(in srgb, var(--surface-muted) 26%, var(--surface));
+  }
+}
+
 table.r22-card-table > tbody > tr:hover,
 table.r22-report-table > tbody > tr:hover {
   background-color: var(--selected-bg);
+  box-shadow: inset 3px 0 0 var(--primary);
 }
 
 /* Native Dialog Scroll Containment & Input Focus Inversion */
