@@ -786,36 +786,73 @@ export function WorkerOperations({
                 </button>
               }
               summary={
-                <p role="status" aria-live="polite" data-testid="worker-filter-summary"
-                  className="text-sm sm:text-base font-bold text-foreground">
-                  {workerSummary === null ? "Đang tính tổng theo bộ lọc…" : (
-                    <>
-                      Tổng số NLĐ:{" "}
-                      <span className="text-red-600 dark:text-red-400">
-                        {workerSummary.total_workers.toLocaleString("vi-VN")}
-                      </span>{" "}
-                      — trong{" "}
-                      <span className="text-red-600 dark:text-red-400">
-                        {workerSummary.project_count.toLocaleString("vi-VN")}
-                      </span>{" "}
-                      dự án và{" "}
-                      <span className="text-red-600 dark:text-red-400">
-                        {workerSummary.recruiter_count.toLocaleString("vi-VN")}
-                      </span>{" "}
-                      người tuyển; trạng thái làm việc:{" "}
-                      {filters.status === "" ? "Tất cả" : workerStatusLabel(filters.status)}; nguồn tuyển:{" "}
-                      {workerProviderTypeLabel(filters.providerType)}.
-                      {(filters.firstWorkDateFrom ?? "") !== "" || (filters.firstWorkDateTo ?? "") !== "" ? (
+                <>
+                  <p role="status" aria-live="polite" data-testid="worker-filter-summary"
+                    className="text-sm sm:text-base font-bold text-foreground">
+                    {workerSummary === null ? "Đang tính tổng theo bộ lọc…" : (
+                      <>
+                        Tổng số NLĐ:{" "}
+                        <span className="text-red-600 dark:text-red-400">
+                          {workerSummary.total_workers.toLocaleString("vi-VN")}
+                        </span>{" "}
+                        — trong{" "}
+                        <span className="text-red-600 dark:text-red-400">
+                          {workerSummary.project_count.toLocaleString("vi-VN")}
+                        </span>{" "}
+                        dự án và{" "}
+                        <span className="text-red-600 dark:text-red-400">
+                          {workerSummary.recruiter_count.toLocaleString("vi-VN")}
+                        </span>{" "}
+                        người tuyển; trạng thái làm việc:{" "}
+                        {filters.status === "" ? "Tất cả" : workerStatusLabel(filters.status)}; nguồn tuyển:{" "}
+                        {workerProviderTypeLabel(filters.providerType)}.
+                        {(filters.firstWorkDateFrom ?? "") !== "" || (filters.firstWorkDateTo ?? "") !== "" ? (
+                          <>
+                            {" "}Ngày vào làm:{" "}
+                            {(filters.firstWorkDateFrom ?? "") !== "" ? filters.firstWorkDateFrom : "…"} →{" "}
+                            {(filters.firstWorkDateTo ?? "") !== "" ? filters.firstWorkDateTo : "…"}.
+                          </>
+                        ) : null}
+                        {filters.search.trim() === "" ? null : <> Từ khóa: “{filters.search.trim()}”.</>}
+                      </>
+                    )}
+                  </p>
+                  {workerPage !== null && workerPage.state === "ready" ? (
+                    <div className="ml-auto flex flex-wrap items-center justify-end gap-2 shrink-0">
+                      {quickOffboardingMode ? (
                         <>
-                          {" "}Ngày vào làm:{" "}
-                          {(filters.firstWorkDateFrom ?? "") !== "" ? filters.firstWorkDateFrom : "…"} →{" "}
-                          {(filters.firstWorkDateTo ?? "") !== "" ? filters.firstWorkDateTo : "…"}.
+                          <span role="status" className="text-sm text-muted">
+                            Đã chọn {quickOffboardingIds.size} NLĐ; lựa chọn được giữ khi tải thêm.
+                          </span>
+                          <button type="button" className={buttonClass}
+                            disabled={quickOffboardingBusy} onClick={cancelQuickOffboarding}>
+                            Hủy chọn
+                          </button>
+                          <button type="button" className={primaryClass}
+                            data-testid="worker-quick-offboarding-submit"
+                            disabled={quickOffboardingIds.size === 0 || quickOffboardingBusy}
+                            onClick={(event) => {
+                              quickOffboardingOpenerRef.current = event.currentTarget;
+                              setQuickOffboardingReason("");
+                              setQuickOffboardingOpen(true);
+                            }}>
+                            Cho nghỉ
+                          </button>
                         </>
-                      ) : null}
-                      {filters.search.trim() === "" ? null : <> Từ khóa: “{filters.search.trim()}”.</>}
-                    </>
-                  )}
-                </p>
+                      ) : (
+                        <button type="button" className={buttonClass}
+                          data-testid="worker-quick-offboarding-start"
+                          onClick={(event) => {
+                            quickOffboardingOpenerRef.current = event.currentTarget;
+                            setQuickOffboardingIds(new Set());
+                            setQuickOffboardingMode(true);
+                          }}>
+                          Cho nghỉ nhanh
+                        </button>
+                      )}
+                    </div>
+                  ) : null}
+                </>
               }
             >
               <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-12 lg:items-end">
@@ -996,39 +1033,6 @@ export function WorkerOperations({
         ) : null}
         {workerPage !== null && workerPage.state === "ready" ? (
           <>
-            <div className="flex flex-wrap items-center justify-end gap-2">
-              {quickOffboardingMode ? (
-                <>
-                  <span role="status" className="mr-auto text-sm text-muted">
-                    Đã chọn {quickOffboardingIds.size} NLĐ; lựa chọn được giữ khi tải thêm.
-                  </span>
-                  <button type="button" className={buttonClass}
-                    disabled={quickOffboardingBusy} onClick={cancelQuickOffboarding}>
-                    Hủy chọn
-                  </button>
-                  <button type="button" className={primaryClass}
-                    data-testid="worker-quick-offboarding-submit"
-                    disabled={quickOffboardingIds.size === 0 || quickOffboardingBusy}
-                    onClick={(event) => {
-                      quickOffboardingOpenerRef.current = event.currentTarget;
-                      setQuickOffboardingReason("");
-                      setQuickOffboardingOpen(true);
-                    }}>
-                    Cho nghỉ
-                  </button>
-                </>
-              ) : (
-                <button type="button" className={buttonClass}
-                  data-testid="worker-quick-offboarding-start"
-                  onClick={(event) => {
-                    quickOffboardingOpenerRef.current = event.currentTarget;
-                    setQuickOffboardingIds(new Set());
-                    setQuickOffboardingMode(true);
-                  }}>
-                  Cho nghỉ nhanh
-                </button>
-              )}
-            </div>
             <WorkerTable rows={workerPage.items}
               quickOffboardingMode={quickOffboardingMode}
               selectedQuickOffboardingIds={quickOffboardingIds}
