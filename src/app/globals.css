@@ -283,6 +283,17 @@ table.r22-report-table thead th:first-child {
   }
 }
 
+@keyframes halvi-menu-spring {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -6px, 0) scale(0.93);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
 [data-ui-panel-motion="true"]:not([hidden]) {
   animation: ui-panel-enter var(--ui-motion-tab, 200ms) var(--ui-motion-ease, cubic-bezier(0.22, 1, 0.36, 1)) both;
 }
@@ -297,6 +308,11 @@ table.r22-report-table thead th:first-child {
 
 [data-ui-popover-motion="true"] {
   animation: ui-popover-enter var(--ui-motion-reveal, 200ms) var(--ui-motion-ease, cubic-bezier(0.22, 1, 0.36, 1)) both;
+}
+
+[role="menu"],
+[role="radiogroup"] {
+  animation: halvi-menu-spring 320ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
 }
 
 [data-ui-drawer-motion="left"] {

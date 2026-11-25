@@ -157,10 +157,59 @@ export function ThemeSelector({
                 type="button"
                 role="radio"
                 aria-checked={selected}
-                onClick={() => {
-                  setTheme(t.id);
-                  changeOpen(false);
-                  btnRef.current?.focus();
+                onClick={(event) => {
+                  const anchorRect =
+                    event.currentTarget.getBoundingClientRect() ??
+                    btnRef.current?.getBoundingClientRect();
+                  const applySelection = () => {
+                    setTheme(t.id);
+                    changeOpen(false);
+                    btnRef.current?.focus();
+                  };
+                  const docWithVt = document as Document & {
+                    startViewTransition?: (cb: () => void) => { ready: Promise<void> };
+                  };
+                  const reducedMotion =
+                    typeof window !== "undefined" &&
+                    typeof window.matchMedia === "function" &&
+                    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+                  if (
+                    t.id !== themeId &&
+                    typeof docWithVt.startViewTransition === "function" &&
+                    !reducedMotion &&
+                    anchorRect
+                  ) {
+                    const cx = anchorRect.left + anchorRect.width / 2;
+                    const cy = anchorRect.top + anchorRect.height / 2;
+                    const maxR = Math.hypot(
+                      Math.max(cx, window.innerWidth - cx),
+                      Math.max(cy, window.innerHeight - cy),
+                    );
+                    try {
+                      docWithVt
+                        .startViewTransition(applySelection)
+                        .ready.then(() => {
+                          document.documentElement.animate(
+                            {
+                              clipPath: [
+                                `circle(0px at ${cx}px ${cy}px)`,
+                                `circle(${maxR}px at ${cx}px ${cy}px)`,
+                              ],
+                            },
+                            {
+                              duration: 450,
+                              easing: "cubic-bezier(0.65, 0, 0.35, 1)",
+                              pseudoElement: "::view-transition-new(root)",
+                            },
+                          );
+                        })
+                        .catch(() => {});
+                      return;
+                    } catch {
+                      // Fallback to immediate theme switch
+                    }
+                  }
+                  applySelection();
                 }}
                 className={
                   "flex w-full items-center gap-3 rounded-lg px-2.5 py-2 text-left text-sm text-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-ring/40 " +
