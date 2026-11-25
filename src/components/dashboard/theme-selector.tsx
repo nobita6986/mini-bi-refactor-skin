@@ -17,13 +17,14 @@ function Swatches({ theme }: { theme: ThemeDef }) {
   );
 }
 
-// Trigger swatch dùng CSS var (SSR/client giống nhau — không hydration mismatch).
+// Trigger swatch dùng CSS var (SSR/client giống nhau — không hydration mismatch): 1 ô tròn màu chủ đạo (--primary).
 function CurrentSwatches() {
   return (
-    <span className="flex items-center gap-0.5" aria-hidden>
-      {["var(--primary)", "var(--secondary)", "var(--accent)"].map((c, i) => (
-        <span key={i} className="h-3 w-3 rounded-full border border-black/10" style={{ background: c }} />
-      ))}
+    <span className="flex items-center justify-center" aria-hidden>
+      <span
+        className="h-4 w-4 rounded-full border border-black/10 shadow-[0_0_0_3px_color-mix(in_srgb,var(--primary)_18%,transparent)]"
+        style={{ background: "var(--primary)" }}
+      />
     </span>
   );
 }
@@ -129,7 +130,7 @@ export function ThemeSelector({
         className={
           compact
             ? "inline-flex h-11 w-11 items-center justify-center rounded-full border border-border/80 bg-surface p-0 text-foreground shadow-[var(--shadow-card)] hover:bg-surface-muted focus:outline-none focus-visible:ring-2 focus-visible:ring-ring/40"
-            : "inline-flex h-11 items-center gap-2 rounded-full border border-border/80 bg-surface px-3.5 text-sm font-medium text-foreground shadow-[var(--shadow-card)] hover:bg-surface-muted focus:outline-none focus-visible:ring-2 focus-visible:ring-ring/40"
+            : "inline-flex h-11 w-11 items-center justify-center rounded-full border border-border/80 bg-surface p-0 text-sm font-medium text-foreground shadow-[var(--shadow-card)] hover:bg-surface-muted focus:outline-none focus-visible:ring-2 focus-visible:ring-ring/40"
         }
       >
         <CurrentSwatches />
