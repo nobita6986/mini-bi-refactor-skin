@@ -18,7 +18,7 @@ export function ReportTableContainer({
   return (
     <div
       className={cn(
-        "overflow-hidden rounded-xl border border-border bg-surface shadow-2xs",
+        "overflow-hidden rounded-[22px] border border-border/80 bg-surface shadow-[var(--shadow-card)]",
         className,
       )}
     >

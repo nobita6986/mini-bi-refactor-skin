@@ -128,8 +128,8 @@ export function ThemeSelector({
         }}
         className={
           compact
-            ? "inline-flex h-11 w-11 items-center justify-center rounded-lg border border-border bg-surface p-0 text-foreground hover:bg-muted/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-ring/40"
-            : "inline-flex h-11 items-center gap-2 rounded-lg border border-border bg-surface px-3 text-sm font-medium text-foreground hover:bg-muted/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-ring/40"
+            ? "inline-flex h-11 w-11 items-center justify-center rounded-full border border-border/80 bg-surface p-0 text-foreground shadow-[var(--shadow-card)] hover:bg-surface-muted focus:outline-none focus-visible:ring-2 focus-visible:ring-ring/40"
+            : "inline-flex h-11 items-center gap-2 rounded-full border border-border/80 bg-surface px-3.5 text-sm font-medium text-foreground shadow-[var(--shadow-card)] hover:bg-surface-muted focus:outline-none focus-visible:ring-2 focus-visible:ring-ring/40"
         }
       >
         <CurrentSwatches />
@@ -144,7 +144,7 @@ export function ThemeSelector({
           onKeyDown={onListKeyDown}
           style={{ top: menuPosition.top, left: menuPosition.left }}
           className={
-            "fixed max-h-[calc(100dvh-1rem)] w-64 max-w-[calc(100vw-1rem)] overflow-y-auto rounded-xl border border-border bg-surface p-1.5 shadow-lg " +
+            "fixed max-h-[calc(100dvh-1rem)] w-64 max-w-[calc(100vw-1rem)] overflow-y-auto rounded-[20px] border border-border/80 bg-surface p-1.5 shadow-[var(--shadow-card-hover)] " +
             (compact ? "z-[50]" : "z-[100]")
           }
         >

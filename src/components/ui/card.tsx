@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 
 export function Card({ children, className }: { children: ReactNode; className?: string }) {
   return (
-    <section className={cn("rounded-[10px] border border-border bg-surface p-5 shadow-[var(--shadow-card)]", className)}>
+    <section className={cn("rounded-[22px] border border-border/80 bg-surface p-5 shadow-[var(--shadow-card)]", className)}>
       {children}
     </section>
   );

@@ -19,7 +19,7 @@ export function FilterToolbar({
     <section
       data-testid={dataTestId}
       className={cn(
-        "rounded-xl border border-border bg-surface px-4 py-3.5 shadow-[var(--shadow-card)] space-y-2.5",
+        "rounded-[22px] border border-border/80 bg-surface px-4 py-3.5 shadow-[var(--shadow-card)] space-y-2.5",
         className,
       )}
     >

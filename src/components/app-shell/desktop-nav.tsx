@@ -55,7 +55,10 @@ export function DesktopNav({
   const pathname = usePathname();
   const active = findEntryByPath(pathname);
   return (
-    <nav aria-label="Điều hướng chính" className="ml-2 hidden items-center gap-1 md:flex">
+    <nav
+      aria-label="Điều hướng chính"
+      className="ml-2 hidden items-center gap-1 rounded-full border border-border/80 bg-surface p-1 shadow-[var(--shadow-card)] md:flex"
+    >
       {groupNavEntries(items).map((item) => {
         if (item.type === "entry") {
           const entry = item.entry;
@@ -68,10 +71,10 @@ export function DesktopNav({
               href={entry.path}
               aria-current={isActive ? "page" : undefined}
               className={cn(
-                "inline-flex h-9 items-center gap-2 rounded-lg px-3 text-sm transition-colors duration-[var(--ui-motion-hover,160ms)] ease-[var(--ui-motion-ease,cubic-bezier(0.22,1,0.36,1))] motion-reduce:transition-none",
+                "inline-flex h-9 items-center gap-2 rounded-full px-3.5 text-sm transition-[color,background-color,box-shadow] duration-[var(--ui-motion-hover,160ms)] ease-[var(--ui-motion-ease,cubic-bezier(0.22,1,0.36,1))] motion-reduce:transition-none",
                 "focus:outline-none focus-visible:ring-2 focus-visible:ring-ring/40",
                 isActive
-                  ? "bg-[var(--selected-bg)] font-semibold text-primary shadow-[inset_0_-2px_0_var(--primary)]"
+                  ? "bg-primary font-semibold text-on-primary shadow-[0_6px_16px_-6px_var(--primary)]"
                   : "font-medium text-muted hover:bg-surface-muted hover:text-[var(--navy)]"
               )}
             >
@@ -88,10 +91,10 @@ export function DesktopNav({
             <DropdownMenu.Trigger
               aria-label={item.label}
               className={cn(
-                "inline-flex h-9 items-center gap-2 rounded-lg px-3 text-sm transition-colors duration-[var(--ui-motion-hover,160ms)] ease-[var(--ui-motion-ease,cubic-bezier(0.22,1,0.36,1))] motion-reduce:transition-none",
+                "inline-flex h-9 items-center gap-2 rounded-full px-3.5 text-sm transition-[color,background-color,box-shadow] duration-[var(--ui-motion-hover,160ms)] ease-[var(--ui-motion-ease,cubic-bezier(0.22,1,0.36,1))] motion-reduce:transition-none",
                 "focus:outline-none focus-visible:ring-2 focus-visible:ring-ring/40",
                 isActive
-                  ? "bg-[var(--selected-bg)] font-semibold text-primary shadow-[inset_0_-2px_0_var(--primary)]"
+                  ? "bg-primary font-semibold text-on-primary shadow-[0_6px_16px_-6px_var(--primary)]"
                   : "font-medium text-muted hover:bg-surface-muted hover:text-[var(--navy)]"
               )}
             >
@@ -102,8 +105,8 @@ export function DesktopNav({
             <DropdownMenu.Portal>
               <DropdownMenu.Content
                 align="start"
-                sideOffset={6}
-                className="z-50 min-w-56 rounded-[10px] border border-border bg-surface p-1 shadow-[var(--shadow-card-hover)]"
+                sideOffset={8}
+                className="z-50 min-w-56 rounded-[18px] border border-border/80 bg-surface p-1.5 shadow-[var(--shadow-card-hover)]"
               >
                 {item.entries.map((entry) => {
                   const EntryIcon = NAV_ICONS[entry.id];
@@ -115,7 +118,7 @@ export function DesktopNav({
                         href={entry.path}
                         aria-current={entryActive ? "page" : undefined}
                         className={cn(
-                          "flex h-10 items-center gap-3 rounded-md px-3 text-sm font-medium outline-none transition-colors duration-[var(--ui-motion-hover,160ms)] ease-[var(--ui-motion-ease,cubic-bezier(0.22,1,0.36,1))] motion-reduce:transition-none",
+                          "flex h-10 items-center gap-3 rounded-xl px-3 text-sm font-medium outline-none transition-colors duration-[var(--ui-motion-hover,160ms)] ease-[var(--ui-motion-ease,cubic-bezier(0.22,1,0.36,1))] motion-reduce:transition-none",
                           "data-[highlighted]:bg-[var(--selected-bg)] data-[highlighted]:text-primary",
                           entryActive
                             ? "bg-[var(--selected-bg)] font-semibold text-primary"

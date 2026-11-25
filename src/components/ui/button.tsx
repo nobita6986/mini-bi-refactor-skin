@@ -15,7 +15,7 @@ export type ButtonSize = "md" | "sm" | "icon-sm";
 
 const VARIANT_CLASSES: Readonly<Record<ButtonVariant, string>> = {
   primary:
-    "border border-transparent bg-primary text-on-primary shadow-2xs hover:bg-[var(--primary-hover)] hover:shadow-xs",
+    "border border-transparent bg-primary text-on-primary shadow-[0_8px_18px_-10px_var(--primary)] hover:bg-[var(--primary-hover)] hover:shadow-[0_10px_22px_-8px_var(--primary)]",
   secondary:
     "border border-border bg-surface text-[var(--navy)] shadow-2xs hover:border-primary/45 hover:bg-surface-muted hover:shadow-xs",
   outline:
@@ -31,12 +31,12 @@ const VARIANT_CLASSES: Readonly<Record<ButtonVariant, string>> = {
 };
 
 const SIZE_CLASSES: Readonly<Record<ButtonSize, string>> = {
-  // Mobile touch target >= 44px (min-h-11), Desktop standard >= 40px (sm:min-h-10)
-  md: "min-h-11 sm:min-h-10 px-3.5 py-2 text-sm rounded-lg gap-2",
-  // Table row action button: 44px on mobile (<768px), compact 32px (md:h-8) on desktop table
-  sm: "min-h-11 md:min-h-8 md:h-8 px-2.5 py-1.5 md:py-1 text-xs rounded-md gap-1.5",
+  // Mobile touch target >= 44px (min-h-11), Desktop standard >= 40px (sm:min-h-10) — Halvi capsule pill
+  md: "min-h-11 sm:min-h-10 px-4 py-2 text-sm rounded-full gap-2",
+  // Table row action button: 44px on mobile (<768px), compact 32px (md:h-8) on desktop table — Halvi capsule pill
+  sm: "min-h-11 md:min-h-8 md:h-8 px-3 py-1.5 md:py-1 text-xs rounded-full gap-1.5",
   "icon-sm":
-    "min-h-11 min-w-11 md:min-h-8 md:min-w-8 md:h-8 md:w-8 p-0 rounded-md",
+    "min-h-11 min-w-11 md:min-h-8 md:min-w-8 md:h-8 md:w-8 p-0 rounded-full",
 };
 
 export function buttonClasses({
