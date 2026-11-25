@@ -106,11 +106,11 @@ export function darken(hex: string, amount: number): string {
 // ---------------------------------------------------------------------------
 
 const LIGHT_NEUTRALS: Omit<ThemeTokens, "bg" | "primary" | "secondary" | "accent" | "chart"> = {
-  fg: "#091e5a",
+  fg: "#0f172a",
   surface: "#ffffff",
-  muted: "#4a5578",
-  border: "#cbd5e1",
-  ring: "#0738cd", // placeholder — ghi đè bằng primary bên dưới
+  muted: "#475569",
+  border: "#e2e8f0",
+  ring: "#c2410c", // placeholder — ghi đè bằng primary bên dưới
   tooltip: "#ffffff",
   onPrimary: "#ffffff",
 };
@@ -151,7 +151,10 @@ function defineTheme(
 }
 
 export const THEMES: ThemeDef[] = [
-  defineTheme("hr-partner", "HR Partner", "#EEF2FB", "#0738CD", "#042280", "#FF0065", [
+  defineTheme("hr-partner", "HR Partner", "#FFF5EC", "#C2410C", "#7C2D12", "#EA580C", [
+    "#C2410C", "#EA580C", "#D97706", "#9A3412", "#059669", "#0369A1", "#7C3AED", "#475569",
+  ]),
+  defineTheme("royal-navy", "Royal Navy", "#EEF2FB", "#0738CD", "#042280", "#FF0065", [
     "#3745A5", "#0738CD", "#EA580C", "#E11D48", "#059669", "#7C3AED", "#CA8A04", "#475569",
   ]),
   defineTheme("ocean-trust", "Ocean Trust", "#EFF8FF", "#075985", "#0E7490", "#0F766E", [
