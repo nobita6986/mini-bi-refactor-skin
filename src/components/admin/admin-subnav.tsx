@@ -20,8 +20,8 @@ export function AdminSubnav({
   const pathname = usePathname();
   const items = groupAdminSections(sections);
   return (
-    <nav aria-label="Điều hướng Quản trị" className="mb-6 overflow-x-auto">
-      <ul className="inline-flex flex-wrap gap-2 overflow-x-auto whitespace-nowrap rounded-full border border-border/80 bg-surface p-1.5 shadow-[var(--shadow-card)]">
+    <nav aria-label="Điều hướng Quản trị" data-admin-subnav="true" className="mb-6">
+      <ul className="inline-flex flex-wrap gap-2 max-w-full items-center rounded-full border border-border/80 bg-surface p-1.5 shadow-[var(--shadow-card)]">
         {items.map((item) => {
           if (item.type === "group") {
             const current = item.sections.some((section) =>

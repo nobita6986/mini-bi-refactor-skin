@@ -928,7 +928,7 @@ export function IndustrialParkCatalogManager({
               <div className="overflow-x-auto rounded-xl border border-border bg-surface shadow-2xs">
                 <table
                   data-testid="industrial-park-catalog-table"
-                  className="r22-card-table w-full min-w-[720px] border-collapse text-left text-sm"
+                  className="r22-card-table w-full border-collapse text-left text-sm"
                 >
                   <caption className="sr-only">
                     Danh sách Khu công nghiệp và Tỉnh/Thành trực thuộc

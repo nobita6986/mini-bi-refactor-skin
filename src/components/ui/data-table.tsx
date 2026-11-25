@@ -56,12 +56,12 @@ export const DATA_TABLE_HEAD_CLASS =
   "border-b border-border bg-surface-muted text-xs font-bold uppercase tracking-wider text-[var(--navy)]";
 
 export const DATA_TABLE_TH_CLASS =
-  "px-3.5 py-3 text-left font-bold whitespace-nowrap";
+  "px-3 py-2.5 text-left font-bold whitespace-nowrap";
 
 export const DATA_TABLE_ROW_CLASS =
   "border-b border-border/65 last:border-b-0 transition-colors hover:bg-[var(--selected-bg)] align-middle";
 
-export const DATA_TABLE_TD_CLASS = "px-3.5 py-2.5 align-middle text-foreground";
+export const DATA_TABLE_TD_CLASS = "px-3 py-2.5 align-middle text-foreground";
 
 export function RowActionCluster({
   children,

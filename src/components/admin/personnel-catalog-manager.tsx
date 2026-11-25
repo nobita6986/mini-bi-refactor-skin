@@ -1160,7 +1160,7 @@ export function PersonnelCatalogManager() {
           ) : (
             <>
               <div role="region" aria-label="Bảng danh sách nhân sự" tabIndex={0} className="overflow-x-auto rounded-xl border border-border bg-surface shadow-2xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40">
-                <table className="r22-card-table w-full min-w-[860px] border-collapse text-left text-sm">
+                <table className="r22-card-table w-full border-collapse text-left text-sm">
                   <caption className="sr-only">Danh sách hồ sơ nhân sự</caption>
                   <thead className="border-b border-border bg-surface-muted text-xs font-semibold uppercase tracking-wider text-muted">
                     <tr>

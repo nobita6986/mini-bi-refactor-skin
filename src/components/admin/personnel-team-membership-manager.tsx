@@ -807,7 +807,7 @@ function MembershipSection({
         <>
           <div role="region" aria-label={`Bảng ${stateLabel(state).toLowerCase()}`} tabIndex={0}
             className="overflow-x-auto rounded-xl border border-border bg-surface shadow-2xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40">
-            <table className="r22-card-table w-full min-w-[640px] border-collapse text-left text-sm">
+            <table className="r22-card-table w-full border-collapse text-left text-sm">
               <caption className="sr-only">{stateLabel(state)} của hồ sơ</caption>
               <thead className="border-b border-border bg-surface-muted text-xs font-semibold uppercase tracking-wider text-muted"><tr>
                 <th scope="col" className="px-3.5 py-3">Nhóm</th>

@@ -711,7 +711,7 @@ export function AccountManager({
         ) : (
           <>
             <div className="overflow-x-auto rounded-xl border border-border bg-surface shadow-2xs">
-              <table className="r22-card-table w-full min-w-[780px] border-collapse text-left text-sm">
+              <table className="r22-card-table w-full border-collapse text-left text-sm">
                 <caption className="sr-only">Danh sách tài khoản và trạng thái hoạt động</caption>
                 <thead className="border-b border-border bg-surface-muted text-xs uppercase text-muted">
                   <tr>

@@ -791,7 +791,7 @@ export function ProvinceCatalogManager({
               <div className="overflow-x-auto rounded-xl border border-border bg-surface shadow-2xs">
                 <table
                   data-testid="province-catalog-table"
-                  className="r22-card-table w-full min-w-[680px] border-collapse text-left text-sm"
+                  className="r22-card-table w-full border-collapse text-left text-sm"
                 >
                   <caption className="sr-only">
                     Danh sách Tỉnh/Thành và số lượng Khu công nghiệp
