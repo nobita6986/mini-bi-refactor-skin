@@ -80,7 +80,7 @@ export function AccountAccessWorkspace({
         }
       />
 
-      <div className="border-b border-border">
+      <div>
         <div
           role="tablist"
           aria-label="Phân khu quản trị tài khoản"
@@ -96,7 +96,7 @@ export function AccountAccessWorkspace({
             onClick={() => setActiveTab("accounts")}
             onKeyDown={handleTabKeyDown}
             className={cn(
-              "relative flex-none min-h-11 sm:min-h-10 px-4 text-sm font-medium text-muted transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40",
+              "relative flex-none min-h-11 sm:min-h-10 rounded-full px-4 text-sm font-medium text-muted transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40",
               "aria-selected:text-primary after:pointer-events-none after:content-[''] after:absolute after:inset-x-0 after:bottom-0 after:border-b-[3px] after:border-transparent aria-selected:after:border-primary",
             )}
           >
@@ -112,7 +112,7 @@ export function AccountAccessWorkspace({
             onClick={() => setActiveTab("global-roles")}
             onKeyDown={handleTabKeyDown}
             className={cn(
-              "relative flex-none min-h-11 sm:min-h-10 px-4 text-sm font-medium text-muted transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40",
+              "relative flex-none min-h-11 sm:min-h-10 rounded-full px-4 text-sm font-medium text-muted transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40",
               "aria-selected:text-primary after:pointer-events-none after:content-[''] after:absolute after:inset-x-0 after:bottom-0 after:border-b-[3px] after:border-transparent aria-selected:after:border-primary",
             )}
           >
